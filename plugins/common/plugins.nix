@@ -53,6 +53,7 @@ in
       enable = true;
       settings.spec = config.wKeyList;
       settings.preset = "helix";
+      settings.icons.colors = false;
     };
   };
   opts = {
