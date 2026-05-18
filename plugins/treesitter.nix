@@ -10,7 +10,7 @@
           # evaluation warning: Nixvim (plugins.treesitter): `plugins.treesitter.settings.highlight.disable` is an upstream legacy nvim-treesitter
           # option. For Nixvim's native highlighting support with the modern nvim-treesitter main
           # branch, use `plugins.treesitter.highlight.disable` instead.
-          enable = false;
+          enable = true; # enabled back again cause it's not highlighting everything
           # disable = [
           #   "latex"
           #   "markdown"
