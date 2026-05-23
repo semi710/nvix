@@ -8,6 +8,14 @@ let
   inherit (lib.nixvim) mkRaw;
 in
 {
+  extraConfigLua = # lua
+    ''
+      vim.cmd([[
+        function! MkdpNoOp(url)
+        endfunction
+      ]])
+    '';
+
   plugins = {
     lsp.servers = {
       markdown_oxide.enable = true;
@@ -18,6 +26,7 @@ in
       enable = true;
       settings.echo_preview_url = 1;
       settings.open_to_the_world = 1;
+      settings.browserfunc = "MkdpNoOp";
     };
     render-markdown = {
       enable = true;
@@ -137,10 +146,31 @@ in
         # lua
         mkRaw ''
           function()
-            -- Set keymap: <leader>p to save and convert to PDF using pandoc
-            vim.api.nvim_buf_set_keymap(0, 'n', '<leader>pg', '<cmd>Glow<CR>', { desc = "Markdown Glow preview", noremap = true, silent = true })
-            vim.api.nvim_buf_set_keymap(0, 'n', '<leader>pb', '<cmd>MarkdownPreview<CR>', { desc = "Markdown Browser Preview", noremap = true, silent = true })
-            vim.api.nvim_buf_set_keymap(0, 'n', '<leader>pp', '<cmd> lua require("md-pdf").convert_md_to_pdf()<CR>', { desc = "Markdown Print pdf", noremap = true, silent = true })
+            -- <leader>pg  Glow (terminal) preview
+            vim.api.nvim_buf_set_keymap(0, 'n', '<leader>pg', '<cmd>Glow<CR>',
+              { desc = "Markdown Glow preview", noremap = true, silent = true })
+
+            -- <leader>pb  Browser preview + copy localhost URL to clipboard
+            vim.keymap.set('n', '<leader>pb', function()
+              vim.cmd('MarkdownPreview')
+              vim.defer_fn(function()
+                local msgs = vim.api.nvim_exec2('messages', { output = true }).output
+                local url = nil
+                for line in msgs:gmatch("[^\n]+") do
+                  local m = line:match("https?://[%d%.]+:%d+/%S*") or line:match("https?://[%d%.]+:%d+")
+                  if m then url = m end
+                end
+                if url then
+                  url = url:gsub("https?://[%d%.]+", "http://localhost")
+                  vim.fn.setreg('+', url)
+                  vim.notify("URL copied to clipboard: " .. url, vim.log.levels.INFO)
+                end
+              end, 500)
+            end, { buffer = 0, desc = "Markdown Browser Preview + Copy URL", noremap = true, silent = true })
+
+            -- <leader>pp  Print to PDF via pandoc
+            vim.api.nvim_buf_set_keymap(0, 'n', '<leader>pp', '<cmd>lua require("md-pdf").convert_md_to_pdf()<CR>',
+              { desc = "Markdown Print pdf", noremap = true, silent = true })
           end
         '';
     }
