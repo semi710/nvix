@@ -12,10 +12,13 @@ jobs:
     permissions:
       contents: read
     strategy:
+      fail-fast: false
       matrix:
         include:
           - runner: ubuntu-latest
             system: x86_64-linux
+          - runner: ubuntu-24.04-arm
+            system: aarch64-linux
     steps:
       - uses: actions/checkout@v4
 
@@ -25,15 +28,11 @@ jobs:
           extra_nix_config: |
             access-tokens = github.com=${{ github.token }}
             system-features = nixos-test benchmark big-parallel kvm
-            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.nixos.org/
 
       - uses: cachix/cachix-action@v15
         with:
           name: nvix
-          extraPullNames: nix-community
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Build flake outputs
-        run: |
-          nix build --accept-flake-config .#bare .#core .#full --no-link --print-out-paths | cachix push nvix
+        run: nix build --accept-flake-config .#bare .#core .#full --no-link --print-out-paths
