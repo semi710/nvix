@@ -13,7 +13,7 @@ let
       extraSpecialArgs = { inherit (flake) inputs self; };
       inherit module;
     };
-  inherit (flake) inputs self;
+  inherit (flake) self;
   bareModules = [
     # Core functionality and improvements
     self.nvixPlugins.common

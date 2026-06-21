@@ -1,13 +1,7 @@
-{ inputs, self, ... }:
+{ self, ... }:
 {
   flake.overlays.default = (
     final: prev: {
-      stable = import inputs.nixpkgs-stable {
-        allowUnfree = true;
-        inherit (prev) system;
-        overlays = prev.lib.attrValues self.overlays;
-      };
-
       # Fix hardcoded WASM path in kulala-core bundled JS.
       # Upstream bundles __filename as the Nix build directory, which doesn't
       # exist at runtime. Patch it so liblua5.1.wasm resolves relative to the

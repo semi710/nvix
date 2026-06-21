@@ -32,12 +32,6 @@ with lib;
       default = "rounded";
     };
 
-    winblend = mkOption {
-      description = "Blending option for the transparent windows";
-      type = types.int;
-      default = 2;
-    };
-
     transparent = mkEnableOption "transparent" // {
       default = true;
     };

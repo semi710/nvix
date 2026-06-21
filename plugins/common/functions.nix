@@ -1,12 +1,6 @@
 { lib, ... }:
 {
   nvix.mkKey = rec {
-    mkKeymapLazy = key: action: desc: {
-      __unkeyed-1 = key;
-      __unkeyed-2 = action;
-      inherit desc;
-    };
-
     # set of functions that returns attrs for keymap List
     mkKeymap = mode: key: action: desc: {
       inherit mode key action;
@@ -18,11 +12,6 @@
       };
     };
 
-    # Use when no description is to be passed
-    mkKeymap' =
-      mode: key: action:
-      mkKeymap mode key action null;
-
     # Use when custom options to be passed
     mkKeymapWithOpts =
       mode: key: action: desc: opts:
@@ -31,11 +20,6 @@
         options = opts;
       };
 
-    lazyKey = key: action: desc: {
-      __unkeyed-1 = key;
-      __unkeyed-2 = action;
-      desc = desc;
-    };
     # For which-key icon generation
     # Accepts a list of strings and returns a list of objects
     # [{ __unkeyed, icon, group, hidden <optional boolean> }]
