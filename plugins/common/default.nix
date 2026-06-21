@@ -10,7 +10,8 @@ in
     map (fn: ./${fn}) (
       filter (fn: (fn != "default.nix" && !hasSuffix ".md" "${fn}")) (attrNames (readDir ./.))
     );
-  nixpkgs.config.allowUnfree = true;
+  # allowUnfree is handled at the flake pkgs level, not in nixvim module
+  # nixpkgs.config.allowUnfree = true;
   luaLoader.enable = false;
   extraConfigLua = # lua
     ''

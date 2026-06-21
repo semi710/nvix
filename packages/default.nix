@@ -1,4 +1,5 @@
 {
+  pkgs,
   flake,
   inputs',
   self',
@@ -8,7 +9,8 @@ let
   mkNixvim =
     module:
     inputs'.nixvim.legacyPackages.makeNixvimWithModule {
-      extraSpecialArgs = { inherit inputs self; };
+      inherit pkgs;
+      extraSpecialArgs = { inherit (flake) inputs self; };
       inherit module;
     };
   inherit (flake) inputs self;
