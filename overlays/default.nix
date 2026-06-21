@@ -10,7 +10,7 @@
       kulala-core = prev.kulala-core.overrideAttrs (old: {
         postInstall = (old.postInstall or "") + ''
           substituteInPlace $out/lib/kulala-core/kulala-core.js \
-            --replace-fail \
+            --replace \
               '/build/source/node_modules/wasmoon-lua5.1/dist/index.js' \
               "$out/lib/kulala-core/kulala-core.js"
         '';
