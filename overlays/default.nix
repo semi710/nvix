@@ -1,4 +1,4 @@
-{ self, ... }:
+{ ... }:
 {
   flake.overlays.default = (
     final: prev: {

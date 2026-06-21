@@ -1,6 +1,5 @@
 { inputs, self, ... }:
 {
-  debug = true;
   imports = [
     ./devshell.nix
   ];

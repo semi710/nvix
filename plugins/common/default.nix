@@ -225,6 +225,4 @@ in
     nvimRuntime = true;
     plugins = true;
   };
-
-  extraLuaPackages = lp: with lp; [ luarocks ];
 }

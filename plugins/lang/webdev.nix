@@ -14,14 +14,35 @@ in
   plugins = {
     kulala = {
       enable = true; # for rest api (alter to insomnia and postman)
-      luaConfig.post = # lua
-        ''
-          require("kulala").setup({
-            global_keymaps = true;
-            global_keymaps_prefix = "<leader>R";
-            kulala_keymaps_prefix = "";
-          })
-        '';
+      settings = {
+        global_keymaps = true;
+        global_keymaps_prefix = "<leader>R";
+        kulala_keymaps_prefix = "";
+        # Free <C-h>/<C-l> for smart-splits; use H/L for tab switching
+        kulala_keymaps = {
+          "Previous tab" = {
+            __unkeyed-1 = "H";
+            __unkeyed-2 = {
+              __raw = "function() require('kulala.ui').show_previous_tab() end";
+            };
+            mode = [ "n" ];
+          };
+          "Next tab" = {
+            __unkeyed-1 = "L";
+            __unkeyed-2 = {
+              __raw = "function() require('kulala.ui').show_next_tab() end";
+            };
+            mode = [ "n" ];
+          };
+          # H was "Show headers" — remap to gh to keep it accessible
+          "Show headers" = {
+            __unkeyed-1 = "gh";
+            __unkeyed-2 = {
+              __raw = "function() require('kulala.ui').show_headers() end";
+            };
+          };
+        };
+      };
       lazyLoad = {
         enable = true;
         settings = {
