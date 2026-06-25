@@ -237,3 +237,9 @@
   font-size: 0.65em;
   padding: 0.2em 0.6em;
 }
+
+/* prevent repo name truncation in header */
+.md-source__repository {
+  max-width: none !important;
+  white-space: nowrap;
+}
