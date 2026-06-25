@@ -1,0 +1,85 @@
+site_name: nvix
+site_url: https://nvix.semi.sh
+site_description: Modular Neovim configuration powered by Nixvim — bare, core, and full variants.
+site_author: Nikhil Singh
+repo_name: semi710/nvix
+repo_url: https://github.com/semi710/nvix
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+
+theme:
+  name: material
+  font:
+    text: Sora
+    code: JetBrains Mono
+  icon:
+    logo: material/omega
+    repo: fontawesome/brands/github
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    - navigation.instant
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: deep orange
+
+nav:
+  - Home: index.md
+  - Variants: variants.md
+  - Usage: usage.md
+  - Customization: customization.md
+  - Architecture: architecture.md
+  - Plugins: plugins.md
+  - Keymaps: keymaps.md
+  - Real-world usage: real-world.md
+  - Memory:
+      - Context: memory/context.md
+      - Decisions: memory/decisions.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/semi710/nvix
+    - icon: fontawesome/brands/github
+      link: https://github.com/semi710/ndots
+  generator: false
+
+copyright: "Made with <span style=\"color: #ff6e40\">&hearts;</span> by Nikhil · <a href=\"https://semi.sh\">semi.sh</a>"
