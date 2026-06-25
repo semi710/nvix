@@ -13,9 +13,6 @@ A **modular** Neovim configuration powered by
 [flake-parts](https://flake.parts/).<br>
 <small>Three variants - grab the whole thing or cherry-pick plugins</small>
 
-<h3>📚 <a href="https://nvix.semi.sh">nvix.semi.sh</a> - Full Documentation</h3>
-<sub>Variants · Usage · Customization · Architecture · Plugins · Keymaps</sub>
-
 ![GitHub stars](https://img.shields.io/github/stars/semi710/nvix) ![GitHub forks](https://img.shields.io/github/forks/semi710/nvix) ![GitHub last commit](https://img.shields.io/github/last-commit/semi710/nvix) ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
 ## Star History
@@ -27,6 +24,9 @@ A **modular** Neovim configuration powered by
    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=semi710/nvix&type=date&legend=top-left" />
  </picture>
 </a>
+
+<h3>📚 <a href="https://nvix.semi.sh">nvix.semi.sh</a> - Full Documentation</h3>
+<sub>Variants · Usage · Customization · Architecture · Plugins · Keymaps</sub>
 
 <img width="2000" height="0">
 </td>
