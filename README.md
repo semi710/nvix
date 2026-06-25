@@ -11,11 +11,10 @@
 A **modular** Neovim configuration powered by
 [Nixvim](https://github.com/nix-community/nixvim) and
 [flake-parts](https://flake.parts/).<br>
-<small>Three variants - grab the whole thing or cherry-pick plugins</small><br>
-<br><br>
+<small>Three variants - grab the whole thing or cherry-pick plugins</small>
+
 <h3>📚 <a href="https://nvix.semi.sh">nvix.semi.sh</a> - Full Documentation</h3>
-<br>
-<sub>Variants · Usage · Customization · Architecture · Plugins · Keymaps</sub><br>
+<sub>Variants · Usage · Customization · Architecture · Plugins · Keymaps</sub>
 
 ![GitHub stars](https://img.shields.io/github/stars/semi710/nvix) ![GitHub forks](https://img.shields.io/github/forks/semi710/nvix) ![GitHub last commit](https://img.shields.io/github/last-commit/semi710/nvix) ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
