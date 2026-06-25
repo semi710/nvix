@@ -17,7 +17,7 @@ A **modular** Neovim configuration powered by
 <br>
 <sub>Variants · Usage · Customization · Architecture · Plugins · Keymaps</sub><br>
 
-![GitHub Stars](https://img.shields.io/github/stars/semi710/nvix?style=social) ![GitHub Forks](https://img.shields.io/github/forks/semi710/nvix?style=social) ![License: MIT](https://img.shields.io/badge/license-MIT-green) ![Nix Flake Compatible](https://img.shields.io/badge/Nix-Flake_Compatible-blue)
+![GitHub stars](https://img.shields.io/github/stars/semi710/nvix) ![GitHub forks](https://img.shields.io/github/forks/semi710/nvix) ![GitHub last commit](https://img.shields.io/github/last-commit/semi710/nvix) ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
 ## Star History
 
