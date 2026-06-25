@@ -1,6 +1,6 @@
 # Real-world usage
 
-See [ndots](https://ndots.semi.sh) <a href="https://github.com/semi710/ndots" target="_blank"><sub>:fontawesome-brands-github:</sub></a> for a complete NixOS + nix-darwin configuration that consumes nvix.
+See [ndots](https://ndots.semi.sh) <a href="https://github.com/semi710/ndots" target="_blank">:fontawesome-brands-github:</a> for a complete NixOS + nix-darwin configuration that consumes nvix.
 
 ## How ndots uses nvix
 

@@ -96,6 +96,21 @@
   letter-spacing: -0.01em;
 }
 
+/* Vertically align the GitHub repo icon with header text */
+.md-header__source {
+  display: flex;
+  align-items: center;
+}
+
+.md-source {
+  display: flex;
+  align-items: center;
+}
+
+.md-source__icon {
+  vertical-align: middle;
+}
+
 /* footer */
 .md-footer {
   background: var(--md-default-bg-color);
