@@ -36,12 +36,12 @@ with an `nvix.variant` option:
 
 | Host | Variant | Why |
 |------|---------|-----|
-| mach | `full` | Personal laptop — needs LaTeX |
-| jp-mbp | `full` | MacBook Pro — needs LaTeX |
-| semi | `core` | Workstation — no LaTeX needed |
-| dsd | `core` | Work desktop — no LaTeX needed |
-| virt-* | `core` | VMs — daily driver |
-| iso | `bare` | Installer ISO — minimal, fast boot |
+| mach | `full` | Personal laptop - needs LaTeX |
+| jp-mbp | `full` | MacBook Pro - needs LaTeX |
+| semi | `core` | Workstation - no LaTeX needed |
+| dsd | `core` | Work desktop - no LaTeX needed |
+| virt-* | `core` | VMs - daily driver |
+| iso | `bare` | Installer ISO - minimal, fast boot |
 
 Each user config sets `nvix.variant = "...";` and the module handles the
 rest. The `.extend` call layers custom colorschemes and `vimAlias` on

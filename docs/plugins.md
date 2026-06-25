@@ -28,28 +28,28 @@ sorting, tab management. `<Shift-h/l>` to cycle buffers.
 
 ## ux
 
-- **colorizer** — color hex/rgb/hsl preview with Tailwind support
-- **dressing** — better `vim.ui.select` and `vim.ui.input`
-- **lastplace** — remember cursor position per file
-- **fidget** — LSP progress notifications
-- **windows.nvim** — window management plugin
+- **colorizer** - color hex/rgb/hsl preview with Tailwind support
+- **dressing** - better `vim.ui.select` and `vim.ui.input`
+- **lastplace** - remember cursor position per file
+- **fidget** - LSP progress notifications
+- **windows.nvim** - window management plugin
 
 ## snacks
 
-[Snacks.nvim](https://github.com/folke/snacks.nvim) — modular utility kit:
+[Snacks.nvim](https://github.com/folke/snacks.nvim) - modular utility kit:
 
-- **dashboard** — startup screen with GitHub notifications, issues, PRs, git status
-- **explorer** — file explorer (sidebar, right-aligned, 40-width)
-- **picker** — fuzzy finder (replaces Telescope): files, grep, buffers, LSP symbols, commands, keymaps, undo, etc.
-- **lazygit** — lazygit integration with remote-nvim support
-- **bigfile** — fast loading for large files
-- **indent** — indent guides
-- **words** — LSP word navigation
-- **image** — image display in markdown/code
-- **notifier** — notification system
-- **todo-comments** — highlight TODO/FIXME comments
-- **neoscroll** — smooth scrolling
-- **statuscolumn** — custom status column
+- **dashboard** - startup screen with GitHub notifications, issues, PRs, git status
+- **explorer** - file explorer (sidebar, right-aligned, 40-width)
+- **picker** - fuzzy finder (replaces Telescope): files, grep, buffers, LSP symbols, commands, keymaps, undo, etc.
+- **lazygit** - lazygit integration with remote-nvim support
+- **bigfile** - fast loading for large files
+- **indent** - indent guides
+- **words** - LSP word navigation
+- **image** - image display in markdown/code
+- **notifier** - notification system
+- **todo-comments** - highlight TODO/FIXME comments
+- **neoscroll** - smooth scrolling
+- **statuscolumn** - custom status column
 
 ## blink-cmp
 
@@ -59,9 +59,9 @@ implementation (avoids pre-built binary issues).
 
 ## git
 
-- **gitsigns** — git signs, hunks navigation, blame, staging
-- **diffview** — git diff viewer
-- **git-conflict** — merge conflict resolution UI
+- **gitsigns** - git signs, hunks navigation, blame, staging
+- **diffview** - git diff viewer
+- **git-conflict** - merge conflict resolution UI
 
 ## treesitter
 
@@ -73,11 +73,11 @@ Treesitter highlighting + indentation + folding, treesitter-context
 All lspconfig servers auto-enabled with `package = null` (use system
 PATH). Plus:
 
-- **lspsaga** — code actions, hover, rename, outline, diagnostic navigation
-- **trouble** — diagnostics/references list
-- **tiny-inline-diagnostic** — inline diagnostic display
-- **nvim-ufo** — LSP-powered folding
-- **conform.nvim** — formatter with LSP fallback
+- **lspsaga** - code actions, hover, rename, outline, diagnostic navigation
+- **trouble** - diagnostics/references list
+- **tiny-inline-diagnostic** - inline diagnostic display
+- **nvim-ufo** - LSP-powered folding
+- **conform.nvim** - formatter with LSP fallback
 
 ## lang
 

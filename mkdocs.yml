@@ -1,6 +1,6 @@
 site_name: nvix
 site_url: https://nvix.semi.sh
-site_description: Modular Neovim configuration powered by Nixvim — bare, core, and full variants.
+site_description: Modular Neovim configuration powered by Nixvim - bare, core, and full variants.
 site_author: Nikhil Singh
 repo_name: semi710/nvix
 repo_url: https://github.com/semi710/nvix

@@ -4,7 +4,7 @@
 
 ```
 nvix/
-├── flake.nix                # Entry point — flake-parts + nixvim
+├── flake.nix                # Entry point - flake-parts + nixvim
 ├── packages/default.nix      # Three variants: bare, core, full
 ├── plugins/                  # All plugin modules (auto-discovered)
 │   ├── default.nix           # Auto-exporter: *.nix → flake.nvixPlugins.*
@@ -40,7 +40,7 @@ forAllNixFiles ./. (fn: fn)
 # → { common = ./common; git = ./git.nix; lsp = ./lsp; ... }
 ```
 
-This means adding a new plugin is just creating a file — no registration
+This means adding a new plugin is just creating a file - no registration
 needed.
 
 ## Package assembly
@@ -57,7 +57,7 @@ mkNixvim = module:
   };
 ```
 
-Each module is a list of `self.nvixPlugins.*` — the auto-discovered
+Each module is a list of `self.nvixPlugins.*` - the auto-discovered
 plugin files. Nixvim merges them and produces a wrapped `nvim` binary.
 
 ## Shared options
@@ -71,31 +71,31 @@ modules:
 | `nvix.border` | enum | `"rounded"` | LSP floats, lspsaga, diagnostic, dressing |
 | `nvix.transparent` | bool | `true` | kanagawa, tokyonight colorschemes |
 | `nvix.icons` | attrs | `{}` | git signs, diagnostic signs, lualine |
-| `nvix.mkKey` | attrs | functions | All modules — `mkKeymap`, `wKeyObj` |
+| `nvix.mkKey` | attrs | functions | All modules - `mkKeymap`, `wKeyObj` |
 | `wKeyList` | list | `[]` | which-key spec (accumulated across modules) |
 
 ## Keymap helpers
 
 `plugins/common/functions.nix` provides:
 
-- `mkKeymap mode key action desc` — standard keymap with `silent + noremap`
-- `mkKeymapWithOpts mode key action desc opts` — keymap with custom options
-- `wKeyObj [key icon group]` — which-key spec entry
+- `mkKeymap mode key action desc` - standard keymap with `silent + noremap`
+- `mkKeymapWithOpts mode key action desc opts` - keymap with custom options
+- `wKeyObj [key icon group]` - which-key spec entry
 
 These are available as `config.nvix.mkKey.*` in every module.
 
 ## LSP strategy
 
 `plugins/lsp/default.nix` auto-enables **all** lspconfig servers with
-`package = null` — meaning LSP binaries are picked from the system PATH
+`package = null` - meaning LSP binaries are picked from the system PATH
 or devshell, not installed by nvix. This avoids shipping every language
 server in the nvim binary closure.
 
 Exceptions:
 
-- `rust_analyzer` — disabled (handled by `rustaceanvim`)
-- `pylsp` — enabled without `package = null` (nixvim builds custom derivation)
-- `vue_ls` / `volar` — TS integrations disabled (assert `package != null`)
+- `rust_analyzer` - disabled (handled by `rustaceanvim`)
+- `pylsp` - enabled without `package = null` (nixvim builds custom derivation)
+- `vue_ls` / `volar` - TS integrations disabled (assert `package != null`)
 
 ## Overlays
 

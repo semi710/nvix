@@ -1,6 +1,6 @@
 # Customization
 
-nvix is built on Nixvim — every option is overridable. The `.extend`
+nvix is built on Nixvim - every option is overridable. The `.extend`
 method lets you layer changes on top of any variant without forking.
 
 ---

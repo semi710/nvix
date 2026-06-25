@@ -8,6 +8,8 @@ Every plugin is a standalone Nix module. Grab the whole thing as a
 pre-built `nvim` binary, or cherry-pick individual plugins into your own
 Nixvim config.
 
+Consumed by [ndots](https://ndots.semi.sh) <a href="https://github.com/semi710/ndots" target="_blank"><sub>:fontawesome-brands-github:</sub></a>, auto-wired with [nix-wire](https://nix-wire.semi.sh) <a href="https://github.com/semi710/nix-wire" target="_blank"><sub>:fontawesome-brands-github:</sub></a>, utilities from [utils](https://utils.semi.sh) <a href="https://github.com/semi710/utils" target="_blank"><sub>:fontawesome-brands-github:</sub></a>.
+
 ---
 
 ## Three variants

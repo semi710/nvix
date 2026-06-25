@@ -11,9 +11,9 @@
 A **modular** Neovim configuration powered by
 [Nixvim](https://github.com/nix-community/nixvim) and
 [flake-parts](https://flake.parts/).<br>
-<small>Three variants — grab the whole thing or cherry-pick plugins</small><br>
+<small>Three variants - grab the whole thing or cherry-pick plugins</small><br>
 <br><br>
-<h3>📚 <a href="https://nvix.semi.sh">nvix.semi.sh</a> — Full Documentation</h3>
+<h3>📚 <a href="https://nvix.semi.sh">nvix.semi.sh</a> - Full Documentation</h3>
 <br>
 <sub>Variants · Usage · Customization · Architecture · Plugins · Keymaps</sub><br>
 
@@ -81,7 +81,7 @@ reference, and keymaps.
 
 ## Related
 
-- **[ndots](https://github.com/semi710/ndots)** — NixOS config using nvix (5 hosts, per-host variant selection)
-- **[nix-wire](https://github.com/semi710/nix-wire)** — Flake auto-wiring library
-- **[utils](https://github.com/semi710/utils)** — Utility scripts flake
-- **[Nixvim](https://github.com/nix-community/nixvim)** — The foundation nvix is built on
+- **[ndots](https://github.com/semi710/ndots)** - NixOS config using nvix (5 hosts, per-host variant selection)
+- **[nix-wire](https://github.com/semi710/nix-wire)** - Flake auto-wiring library
+- **[utils](https://github.com/semi710/utils)** - Utility scripts flake
+- **[Nixvim](https://github.com/nix-community/nixvim)** - The foundation nvix is built on

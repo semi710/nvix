@@ -1,4 +1,4 @@
-/* terminal-refined dark — shared theme across all semi.sh docs */
+/* terminal-refined dark - shared theme across all semi.sh docs */
 
 :root {
   --md-primary-fg-color: #7c4dff;
@@ -74,7 +74,7 @@
   background: transparent;
 }
 
-/* header — liquid glass */
+/* header - liquid glass */
 .md-header {
   background: rgba(13, 13, 18, 0.45);
   backdrop-filter: blur(28px) saturate(180%);
@@ -207,7 +207,7 @@
   border-radius: 16px 16px 0 0 !important;
 }
 
-/* nav labels — fade subtitle */
+/* nav labels - fade subtitle */
 .md-nav__link .nav-sub {
   color: var(--md-default-fg-color--lighter);
   font-weight: 400;

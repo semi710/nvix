@@ -3,14 +3,14 @@
 ## Nixvim over raw init.lua
 
 Nixvim gives us type-checked, overridable plugin configuration in Nix.
-No runtime plugin manager needed — Nix is the plugin manager.
+No runtime plugin manager needed - Nix is the plugin manager.
 
 ## Three variants instead of one config
 
 Different machines need different things:
 
 - **bare** for ISOs and servers where you just need to edit files
-- **core** for daily work — LSP, completion, git, languages
+- **core** for daily work - LSP, completion, git, languages
 - **full** for LaTeX users who need the full texlive scheme
 
 This avoids shipping gigabytes of LaTeX deps to machines that never
@@ -19,13 +19,13 @@ compile PDFs.
 ## Plugin auto-discovery
 
 `plugins/default.nix` scans the directory and exports everything. No
-manual registration — drop a `.nix` file, it's available as
+manual registration - drop a `.nix` file, it's available as
 `inputs.nvix.nvixPlugins.<name>`.
 
 ## `package = null` LSP strategy
 
 Bundling every language server in the nvim closure would make it huge.
-Instead, all lspconfig servers are enabled with `package = null` — the
+Instead, all lspconfig servers are enabled with `package = null` - the
 binary is expected from the system PATH or devshell. This means:
 
 - `nil` is picked from your NixOS config, not bundled in nvix
@@ -46,7 +46,7 @@ API. nvim-cmp is still widely used but blink is the future.
 
 ## OSC52 clipboard
 
-When `SSH_TTY` is set, nvix switches the clipboard to OSC52 — enabling
+When `SSH_TTY` is set, nvix switches the clipboard to OSC52 - enabling
 copy/paste over SSH without extra configuration. This is critical for
 fully-CLI-based setups accessed via Tailscale.
 

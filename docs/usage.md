@@ -2,7 +2,7 @@
 
 ## Run directly
 
-No install needed — `nix run` pulls and runs nvix instantly:
+No install needed - `nix run` pulls and runs nvix instantly:
 
 ```bash
 nix run github:semi710/nvix#bare

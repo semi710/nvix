@@ -8,12 +8,12 @@ config, extend it, or cherry-pick individual plugins.
 
 ## Constraints
 
-- Built on Nixvim — all options overridable via Nix
-- Three variants: bare, core, full — each a pre-built `nvim` binary
+- Built on Nixvim - all options overridable via Nix
+- Three variants: bare, core, full - each a pre-built `nvim` binary
 - Plugins auto-discovered from `plugins/` directory
 - LSP servers use `package = null` → picked from system PATH, not bundled
 - Binary cache: `nvix.cachix.org`
-- Ponytail mode — minimal, no over-engineering
+- Ponytail mode - minimal, no over-engineering
 
 ## Current State
 
@@ -33,10 +33,10 @@ config, extend it, or cherry-pick individual plugins.
 
 ## Key Decisions
 
-- Snacks.picker over Telescope — lighter, better integration with Snacks ecosystem
-- Blink.cmp over nvim-cmp — faster, Lua-first, better Copilot integration
-- LSP `package = null` strategy — avoids bundling every language server
-- Kanagawa as default colorscheme — catppuccin/tokyonight defined but disabled
-- OSC52 clipboard over SSH — works transparently in remote sessions
-- `nvix.mkKey` helpers — consistent keymap definitions across all modules
-- `wKeyList` accumulation — which-key spec built across modules via list merging
+- Snacks.picker over Telescope - lighter, better integration with Snacks ecosystem
+- Blink.cmp over nvim-cmp - faster, Lua-first, better Copilot integration
+- LSP `package = null` strategy - avoids bundling every language server
+- Kanagawa as default colorscheme - catppuccin/tokyonight defined but disabled
+- OSC52 clipboard over SSH - works transparently in remote sessions
+- `nvix.mkKey` helpers - consistent keymap definitions across all modules
+- `wKeyList` accumulation - which-key spec built across modules via list merging
