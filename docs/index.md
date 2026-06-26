@@ -45,3 +45,11 @@ Or as a flake input:
 See [Variants](variants.md) for what's in each, [Usage](usage.md) for full
 integration, and [Customization](customization.md) for extending and
 overriding.
+
+## Docs
+
+Docs are served at [nvix.semi.sh](https://nvix.semi.sh). To preview locally:
+
+```bash
+just doc
+```

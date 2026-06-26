@@ -211,6 +211,10 @@
   border-radius: 24px !important;
 }
 
+.md-search__input::placeholder {
+  color: var(--md-default-fg-color--lighter);
+}
+
 .md-search__scrollwrap,
 .md-search-result {
   border-radius: 16px !important;

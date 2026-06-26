@@ -4,7 +4,12 @@
     ./devshell.nix
   ];
   perSystem =
-    { lib, system, ... }:
+    {
+      lib,
+      system,
+      pkgs,
+      ...
+    }:
     {
       # Make our overlay available to the devShell
       # "Flake parts does not yet come with an endorsed module that initializes the pkgs argument.""
@@ -17,6 +22,20 @@
           config.allowUnfree = true;
         };
       };
+
+      apps.docs =
+        let
+          env = pkgs.python3.withPackages (
+            ps: with ps; [
+              mkdocs
+              mkdocs-material
+            ]
+          );
+        in
+        {
+          type = "app";
+          program = "${env}/bin/mkdocs";
+        };
 
       imports = [
         (self + /packages)
