@@ -69,7 +69,6 @@ Visual `p` pastes without overwriting clipboard.
 | `<leader>fr` | n | Recent files |
 | `<leader>fp` | n | Projects |
 | `<leader>f/` | n | Grep |
-| `<leader>f?` | n | Grep (fixed strings) |
 | `<leader>sg` | n | Grep (search) |
 | `<leader>sw` | n, x | Grep word/selection |
 | `<leader>sb` | n | Buffer lines |

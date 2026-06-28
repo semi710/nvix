@@ -105,9 +105,8 @@ in
 
     (mkKeymap "n" "<leader>ff" "<cmd>:lua Snacks.picker.files()<cr>" "Find Files")
     (mkKeymap "n" "<leader>fF" "<cmd>:lua Snacks.picker.smart()<cr>" "Smart")
-    (mkKeymap "n" "<leader>f/" "<cmd>:lua Snacks.picker.grep()<cr>" "Grep")
-    (mkKeymap "n" "<leader>f?"
-      "<cmd>:lua Snacks.picker.grep({args = { '--vimgrep', '--smart-case', '--fixed-strings' } })<cr>"
+    (mkKeymap "n" "<leader>f/"
+      "<cmd>:lua Snacks.picker.grep({ title = 'Grep | pat -- -t ft | -g glob | a-r | a-h | a-i' })<cr>"
       "Grep"
     )
     (mkKeymap "n" "<leader>fr" "<cmd>:lua Snacks.picker.recent()<cr>" "Recent")

@@ -10,7 +10,7 @@
       vim.o.equalalways = false
       require('windows').setup({
         ignore = {
-          filetype = { "snacks_picker_list", "snacks_layout_box" },
+          filetype = { "snacks_picker_list", "snacks_layout_box", "snacks_picker_input" },
         },
       })
     '';
