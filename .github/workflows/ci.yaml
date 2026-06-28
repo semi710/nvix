@@ -34,5 +34,8 @@ jobs:
           name: nvix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
+      - name: Check formatting
+        run: nix develop .#default -c treefmt --fail-on-change --no-cache
+
       - name: Build flake outputs
         run: nix build --accept-flake-config .#bare .#core .#full --no-link --print-out-paths
