@@ -1,4 +1,4 @@
-{pkgs, lib, ...}:
+{ pkgs, lib, ... }:
 {
   plugins = {
     lsp.servers.lua_ls = {

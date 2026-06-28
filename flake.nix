@@ -14,6 +14,9 @@
     # hooks for git
     git-hooks.url = "github:cachix/git-hooks.nix";
     git-hooks.flake = false;
+
+    # unified formatter
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs =
