@@ -76,7 +76,7 @@ in
     ) "Peek Folded Lines")
 
     (mkKeymap "n" "<leader>lq" "<CMD>LspStop<Enter>" "Stop LSP")
-    (mkKeymap "n" "<leader>li" "<cmd>LspInfo<cr>" "LSP Info")
+    (mkKeymap "n" "<leader>li" "<cmd>checkhealth vim.lsp<cr>" "LSP Info")
     (mkKeymap "n" "<leader>ls" "<CMD>LspStart<Enter>" "Start LSP")
     (mkKeymap "n" "<leader>lR" "<CMD>LspRestart<Enter>" "Restart LSP")
 

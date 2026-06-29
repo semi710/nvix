@@ -2,9 +2,7 @@
 {
   plugins = {
     lsp.servers = {
-      nil_ls = {
-        enable = true;
-      };
+      nil_ls.enable = true;
       statix.enable = true;
     };
     conform-nvim.settings = {

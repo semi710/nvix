@@ -70,8 +70,60 @@ Treesitter highlighting + indentation + folding, treesitter-context
 
 ## lsp
 
-All lspconfig servers auto-enabled with `package = null` (use system
-PATH). Plus:
+All lspconfig servers are enabled by default with `package = null`,
+meaning the editor expects the LSP binary to already be on the system
+PATH (installed via system packages, devshell, etc). This lets you
+use any LSP that happens to be available without declaring it in nix.
+
+When a language file explicitly sets `enable = true`, the `highestPrio`
+check detects the priority drop (1000 -> 100) and swaps `package` to
+the nixpkgs derivation automatically - so the LSP binary is installed
+and managed by nix. No helper function needed.
+
+### How it works
+
+The Nix module system merges definitions before evaluating them. After
+merging, `enable = mkDefault true` (our default) and `enable = true`
+(a language file) produce the same value - there's no flag to tell them
+apart at evaluation time.
+
+But `options.<path>.highestPrio` exposes the winning definition's
+priority. This is a real nixpkgs feature - nixpkgs itself uses it in
+`version.nix` to check if `system.stateVersion` was explicitly set.
+
+Priority values:
+- `mkDefault` = 1000 (our default `enable`)
+- bare value = 100 (language file's `enable = true`)
+- option default = 1500 (unused here)
+
+The logic in `lsp/default.nix`:
+
+```nix
+mkServerConfig = name: let
+  pkgName = nixvimPackages.${name} or null;
+  userEnabled = (options.plugins.lsp.servers.${name}.enable.highestPrio or 1500) < 1000;
+in {
+  enable = lib.mkDefault true;
+  package = if userEnabled && pkgName != null
+    then pkgs.${pkgName}        # user set enable = true -> install nix package
+    else lib.mkDefault null;    # only our default -> use PATH
+};
+```
+
+| Scenario | `enable` priority | `highestPrio` | `package` |
+|---|---|---|---|
+| No language file sets it | 1000 (our `mkDefault`) | 1000 | `null` (PATH binary) |
+| Language file sets `enable = true` | 100 (bare value wins) | 100 | `pkgs.<nixpkg>` (installed) |
+
+Package name lookup uses nixvim's own `packages.nix` mapping, so
+`bashls` resolves to `pkgs.bash-language-server`, `marksman` to
+`pkgs.marksman`, etc. - no manual package name lookup needed.
+
+Exclusions: `rust_analyzer` (rustaceanvim handles it), `pylsp`
+(nixvim builds custom derivation), `vue_ls`/`volar` (TS integration
+assertions).
+
+Plus:
 
 - **lspsaga** - code actions, hover, rename, outline, diagnostic navigation
 - **trouble** - diagnostics/references list
@@ -92,7 +144,7 @@ PATH). Plus:
 | Typst | `tinymist` | `typstyle` | `typst-preview` |
 | Haskell | `hls` | | |
 | Web | `ts_ls`, `tailwindcss`, `svelte`, `html`, `cssls`, `eslint`, `emmet_ls`, `jsonls`, `biome` | | `ts-autotag`, `ts-comments` |
-| Markdown | `markdown_oxide`, `marksman` | | obsidian, render-markdown, glow, markdown-preview, img-clip |
+| Markdown | `marksman` | | mkdnflow, render-markdown, glow, markdown-preview, img-clip |
 | HTTP | | | kulala (REST client, lazy-loaded on `http`/`rest` ft) |
 
 ## noice

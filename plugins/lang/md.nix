@@ -17,10 +17,7 @@ in
     '';
 
   plugins = {
-    lsp.servers = {
-      markdown_oxide.enable = true;
-      marksman.enable = true;
-    };
+    lsp.servers.marksman.enable = true;
     img-clip.enable = true;
     markdown-preview = {
       enable = true;
@@ -65,67 +62,48 @@ in
           '';
       };
     };
-    obsidian = {
+    mkdnflow = {
       enable = true;
       settings = {
-        legacy_commands = false;
-        ui.enable = false;
-        footer.enabled = false;
-        link.style = "markdown";
-        note_id_func =
-          # lua
-          mkRaw ''
-            function(title)
-              return title
-            end
-          '';
-        note_path_func =
-          # lua
-          mkRaw ''
-            function(spec)
-              local raw = spec.id or spec.title or tostring(os.time())
-
-              -- normalize once, centrally
-              local normalized = raw
-                :gsub("\\", "/")
-                :gsub("^%./", "")                  -- remove leading ./
-                :gsub("%s+", "-")
-                :gsub("[^A-Za-z0-9%-%./]", "")
-                :lower()
-
-              local parts = vim.split(normalized, "/")
-              local filename = parts[#parts]
-              table.remove(parts, #parts)
-
-              local dir = spec.dir
-              for _, p in ipairs(parts) do
-                dir = dir / p
+        modules.bib = false;
+        create_dirs = true;
+        links = {
+          style = "markdown";
+          transform_on_create =
+            # lua
+            mkRaw ''
+              function(text)
+                text = text:gsub("[ /]", "-")
+                text = text:lower()
+                return text
               end
-
-              return (dir / filename):with_suffix(".md")
-            end
-          '';
-        templates = {
-          folder = ".notes/templates";
+            '';
         };
-        workspaces = [
-          {
-            name = "Notes";
-            # Use a function so the directory is created on first run if missing.
-            # obsidian.nvim's Workspace.new requires `path` to exist; otherwise it
-            # silently drops the spec and setup errors with "At least one workspace
-            # is required!" -- bad UX for first-time users.
-            path =
-              # lua
-              mkRaw ''
-                function()
-                  local p = vim.fn.expand("~/.notes")
-                  vim.fn.mkdir(p, "p")
-                  return p
-                end
-              '';
-          }
-        ];
+        mappings = {
+          # normal: paste clipboard as [clipboard](clipboard)
+          # visual: [selection](clipboard) (selection=display, clipboard=target)
+          MkdnCreateLinkFromClipboard = [
+            [
+              "n"
+              "v"
+            ]
+            "<leader>mc"
+          ];
+          # cursor on a [link](path): move/rename its target file + update all refs
+          MkdnMoveSource = [
+            "n"
+            "<leader>mm"
+          ];
+          # yank links to clipboard (cursor must be on a heading)
+          MkdnYankAnchorLink = [
+            "n"
+            "<leader>ya"
+          ];
+          MkdnYankFileAnchorLink = [
+            "n"
+            "<leader>yf"
+          ];
+        };
       };
     };
     glow = {
@@ -171,69 +149,129 @@ in
             -- <leader>pp  Print to PDF via pandoc
             vim.api.nvim_buf_set_keymap(0, 'n', '<leader>pp', '<cmd>lua require("md-pdf").convert_md_to_pdf()<CR>',
               { desc = "Markdown Print pdf", noremap = true, silent = true })
+
+            -- gd: follow markdown link under cursor, else fall back to LSP definition
+            vim.keymap.set('n', 'gd', function()
+              local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+              local line = vim.api.nvim_get_current_line()
+              local pos = 1
+              while pos <= #line do
+                local s, e = line:find("%[[^%]]*%]%([^%)]*%)", pos)
+                if not s then break end
+                if col >= s and col <= e then
+                  vim.cmd("MkdnFollowLink")
+                  return
+                end
+                pos = e + 1
+              end
+              vim.cmd("Trouble lsp_definitions")
+            end, { buffer = 0, desc = "Follow link or LSP definition", noremap = true, silent = true })
           end
         '';
     }
   ];
 
   keymaps = [
-    (mkKeymap "n" "<leader>os" "<cmd>Obsidian quick_switch<cr>" "Obsidian Quick Switch")
-    (mkKeymap "n" "<leader>o/" "<cmd>Obsidian search<cr>" "Obsidian Switch")
-    (mkKeymap "n" "<leader>ot" "<cmd>Obsidian tags<cr>" "Obsidian tag search")
-    (mkKeymap "n" "<leader>ol" "<cmd>Obsidian links<cr>" "Obsidian Buffer links")
-    (mkKeymap "n" "<leader>or" "<cmd>Obsidian backlinks<cr>" "Who links Current Buffer")
-    (mkKeymap "n" "<leader>o|" "<cmd>Obsidian follow_link vsplit<cr>"
-      "Open the link in a vertical split"
-    )
-    (mkKeymap "n" "<leader>o-" "<cmd>Obsidian follow_link hsplit<cr>"
-      "Open the link in a horizontal split"
-    )
-    (mkKeymap "n" "<leader>o<cr>" (
+    (mkKeymap "n" "<leader>mr" (
       # lua
       mkRaw ''
-        function ()
+        function()
+          if vim.bo.filetype ~= "markdown" then return end
           local row, col = unpack(vim.api.nvim_win_get_cursor(0))
           local line = vim.api.nvim_get_current_line()
-
-          -- match word including / and -
-          local pattern = "[A-Za-z0-9_/%-]+"
-
-          local start_col, end_col
-
-          for s, e in function() return string.find(line, pattern, (start_col or 1)) end do
+          local pos = 1
+          while pos <= #line do
+            local s, e = line:find("%[[^%]]*%]%([^%)]*%)", pos)
+            if not s then break end
             if col + 1 >= s and col + 1 <= e then
-              start_col = s
-              end_col = e
-              break
+              local close_bracket = line:find("%]", s + 1)
+              local current_display = line:sub(s + 1, close_bracket - 1)
+              local target = line:sub(close_bracket + 2, e - 1)
+              local before = line:sub(1, s - 1)
+              local after = line:sub(e + 1)
+              vim.ui.input({ prompt = "Display name: ", default = current_display }, function(input)
+                if input then
+                  vim.api.nvim_set_current_line(before .. "[" .. input .. "](" .. target .. ")" .. after)
+                end
+              end)
+              return
             end
-            start_col = e + 1
+            pos = e + 1
           end
-
-          if not start_col then
-            return
-          end
-
-          -- enter visual mode and select range
-          vim.api.nvim_win_set_cursor(0, { row, start_col - 1 })
-          vim.cmd("normal! v")
-          vim.api.nvim_win_set_cursor(0, { row, end_col })
-
-          -- run command (expects visual selection)
-          vim.cmd("Obsidian link_new")
+          vim.notify("Not on a markdown link", vim.log.levels.WARN)
         end
       ''
-    ) "Make note from text under cursor")
+    ) "Rename display (keep file)")
+    (mkKeymap "n" "<leader>mo" (
+      # lua
+      mkRaw ''
+        function()
+          if vim.bo.filetype ~= "markdown" then return end
+          local dir = vim.fn.expand("%:p:h")
+          local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+          local items = {}
+          for lnum, line in ipairs(lines) do
+            local pos = 1
+            while pos <= #line do
+              local s, e = line:find("%[[^%]]*%]%([^%)]*%)", pos)
+              if not s then break end
+              local close_bracket = line:find("%]", s + 1)
+              local display = line:sub(s + 1, close_bracket - 1)
+              local target = line:sub(close_bracket + 2, e - 1)
+              table.insert(items, {
+                text = display,
+                file = vim.fn.simplify(dir .. "/" .. target),
+                line = lnum,
+                col = s,
+              })
+              pos = e + 1
+            end
+          end
+          if #items == 0 then
+            vim.notify("No outgoing links in this file", vim.log.levels.INFO)
+            return
+          end
+          Snacks.picker.pick({
+            title = "Outgoing Links",
+            items = items,
+            format = function(item)
+              return { { item.text, "SnacksPickerLabel" }, { "  " .. item.file, "SnacksPickerComment" } }
+            end,
+            confirm = function(picker, item)
+              picker:close()
+              vim.cmd("e " .. vim.fn.fnameescape(item.file))
+            end,
+          })
+        end
+      ''
+    ) "List outgoing links")
+    (mkKeymap "n" "<leader>mb" (
+      # lua
+      mkRaw ''
+        function()
+          if vim.bo.filetype ~= "markdown" then return end
+          local name = vim.fn.expand("%:t:r")
+          local dir = vim.fn.expand("%:p:h")
+          Snacks.picker.grep({
+            cwd = dir,
+            search = name,
+            title = "Backlinks to " .. name,
+          })
+        end
+      ''
+    ) "List backlinks")
   ];
+
   wKeyList = [
     (wKeyObj [
       "<leader>p"
-      ""
+      ""
       "preview"
     ])
     (wKeyObj [
-      "<leader>o"
-      ""
-      "Obsidian"
+      "<leader>m"
+      ""
+      "mkdnflow"
     ])
   ];
 }

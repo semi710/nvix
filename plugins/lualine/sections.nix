@@ -90,30 +90,29 @@ in
           mkRaw ''
             function()
               local clients = vim.lsp.get_clients()
-              local lsp_names = {}
-              if next(clients) == nil then
-                return "Ls Inactive"
-              end
+              local names = {}
               for _, client in ipairs(clients) do
                 if client.name ~= "copilot" and client.name ~= "null-ls" and client.name ~= "typos_lsp" then
-                  local name = client.name:gsub("%[%d+%]", "") -- makes otter-ls[number] -> otter-ls
-                  table.insert(lsp_names, name)
+                  names[#names + 1] = client.name:gsub("%[%d+%]", "")
                 end
               end
 
-              local formatters = require("conform").list_formatters()
-              local con_names = {}
-
-              for _, formatter in ipairs(formatters) do
-                local name = formatter.name
-                if formatter.available and (name ~= "squeeze_blanks" and name ~= "trim_whitespace" and name ~= "trim_newlines") then
-                  table.insert(con_names, formatter.name)
+              local ok, conform = pcall(require, "conform")
+              if ok then
+                local formatters = conform.list_formatters()
+                for _, formatter in ipairs(formatters) do
+                  if formatter.available and formatter.name ~= "squeeze_blanks" and formatter.name ~= "trim_whitespace" and formatter.name ~= "trim_newlines" then
+                    names[#names + 1] = formatter.name
+                  end
                 end
               end
-              local names = {}
-              vim.list_extend(names, lsp_names)
-              vim.list_extend(names, con_names)
-              return "[" .. table.concat(vim.fn.uniq(names), ", ") .. "]"
+
+              local count = 0
+              for _ in pairs(names) do count = count + 1 end
+              if count == 0 then
+                return "Ls Inactive"
+              end
+              return "[" .. table.concat(names, ", ") .. "]"
             end
           '';
       }

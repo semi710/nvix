@@ -1,8 +1,6 @@
 { pkgs, lib, ... }:
 {
-  plugins.lsp.servers.tinymist = {
-    enable = true;
-  };
+  plugins.lsp.servers.tinymist.enable = true;
 
   plugins.conform-nvim.settings = {
     formatters_by_ft.typst = [ "typstyle" ];
