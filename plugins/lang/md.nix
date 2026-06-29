@@ -28,6 +28,17 @@ in
     render-markdown = {
       enable = true;
       settings = {
+        checkbox = {
+          unchecked.icon = "";
+          checked.icon = "";
+          custom = {
+            todo = {
+              raw = "[-]";
+              rendered = "󰥕 ";
+              highlight = "RenderMarkdownTodo";
+            };
+          };
+        };
         # Skip render-markdown entirely for leetcode.nvim managed buffers/files.
         ignore =
           # lua
@@ -67,6 +78,13 @@ in
       settings = {
         modules.bib = false;
         create_dirs = true;
+        to_do = {
+          statuses = {
+            not_started.marker = " ";
+            in_progress.marker = "-";
+            complete.marker = "x";
+          };
+        };
         links = {
           style = "markdown";
           transform_on_create =
