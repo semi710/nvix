@@ -13,11 +13,17 @@
       formatters_by_ft = {
         xml = [ "xmllint" ];
         yaml = [ "yamlfix" ];
-        json = [ "fixjson" ];
+        json = [ "jq" ];
       };
       formatters = {
         xmllint.command = lib.getExe' pkgs.libxml2 "xmllint";
-        fixjson.command = lib.getExe pkgs.fixjson;
+        jq = {
+          command = lib.getExe pkgs.jq;
+          args = [
+            "-R"
+            "fromjson? // ."
+          ];
+        };
         yamlfix.command = lib.getExe pkgs.yamlfix;
       };
     };
