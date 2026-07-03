@@ -14,16 +14,13 @@
         xml = [ "xmllint" ];
         yaml = [ "yamlfix" ];
         json = [ "jq" ];
+        jsonc = [ "jq" ];
+        markdown = [ "mdformat" ];
       };
       formatters = {
+        mdformat.command = lib.getExe pkgs.mdformat;
         xmllint.command = lib.getExe' pkgs.libxml2 "xmllint";
-        jq = {
-          command = lib.getExe pkgs.jq;
-          args = [
-            "-R"
-            "fromjson? // ."
-          ];
-        };
+        jq.command = lib.getExe pkgs.jq;
         yamlfix.command = lib.getExe pkgs.yamlfix;
       };
     };

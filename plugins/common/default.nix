@@ -106,6 +106,20 @@ in
 
   autoCmd = [
     {
+      desc = "Fire FileType for command-line files (Neovim 0.12 skips it)";
+      event = [ "BufEnter" ];
+      callback =
+        # lua
+        mkRaw ''
+          function(args)
+            if vim.b[args.buf]._nvix_ft_fired then return end
+            if vim.bo[args.buf].filetype == "" then return end
+            vim.b[args.buf]._nvix_ft_fired = true
+            vim.api.nvim_exec_autocmds("FileType", { buffer = args.buf })
+          end
+        '';
+    }
+    {
       desc = "Highlight on yank";
       event = [ "TextYankPost" ];
       callback =

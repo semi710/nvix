@@ -3,7 +3,10 @@ let
   inherit (config.nvix.mkKey) mkKeymap;
 in
 {
-  extraPlugins = with pkgs.vimPlugins; [ stay-centered-nvim ];
+  extraPlugins = with pkgs.vimPlugins; [
+    stay-centered-nvim
+    mini-icons
+  ];
   plugins = {
     # Must have plugins to have a decent flow of work
     cord.enable = true;
@@ -53,7 +56,46 @@ in
       enable = true;
       settings.spec = config.wKeyList;
       settings.preset = "helix";
-      settings.icons.colors = false;
+      settings.icons = {
+        colors = true;
+        rules = [
+          {
+            pattern = "preview";
+            icon = "󰋭";
+            color = "cyan";
+          }
+          {
+            pattern = "link";
+            icon = "󰌷";
+            color = "blue";
+          }
+          {
+            pattern = "rename";
+            icon = "󰑴";
+            color = "yellow";
+          }
+          {
+            pattern = "backlink";
+            icon = "󰆋";
+            color = "blue";
+          }
+          {
+            pattern = "outgoing";
+            icon = "󰈙";
+            color = "blue";
+          }
+          {
+            pattern = "yank";
+            icon = "󰆴";
+            color = "yellow";
+          }
+          {
+            pattern = "numbering";
+            icon = "󰲔";
+            color = "cyan";
+          }
+        ];
+      };
     };
   };
   opts = {

@@ -202,22 +202,22 @@ in
     ])
     (wKeyObj [
       "z"
-      ""
+      "󰘁"
       "fold"
     ])
     (wKeyObj [
       "g"
-      ""
+      "󰿘"
       "goto"
     ])
     (wKeyObj [
       "["
-      ""
+      "󰒲"
       "next"
     ])
     (wKeyObj [
       "]"
-      ""
+      "󰒱"
       "prev"
     ])
     (wKeyObj [
