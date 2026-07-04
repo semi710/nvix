@@ -55,6 +55,26 @@
         "type": "github"
       }
     },
+    "nix-wire": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782479845,
+        "narHash": "sha256-1PNN+lXsPXjNDX6PktqO61rzn1l2J4BR2dnzcvNsGnw=",
+        "owner": "semi710",
+        "repo": "nix-wire",
+        "rev": "815c977bbc5ebe70a0a7b6262efe36c4452f808a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "semi710",
+        "repo": "nix-wire",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1781074563,
@@ -142,6 +162,7 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "git-hooks": "git-hooks",
+        "nix-wire": "nix-wire",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "systems": "systems_2",

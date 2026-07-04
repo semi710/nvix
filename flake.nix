@@ -17,6 +17,9 @@
 
     # unified formatter
     treefmt-nix.url = "github:numtide/treefmt-nix";
+
+    nix-wire.url = "github:semi710/nix-wire";
+    nix-wire.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
