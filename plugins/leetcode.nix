@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
+let
+  inherit (lib.nixvim) mkRaw;
+in
 {
   plugins.leetcode = {
     enable = true;
@@ -12,4 +15,23 @@
       };
     });
   };
+
+  # Skip render-markdown for leetcode.nvim managed buffers/files.
+  plugins.render-markdown.settings.ignore =
+    # lua
+    mkRaw ''
+      function(bufnr)
+        bufnr = bufnr or 0
+        local name = vim.api.nvim_buf_get_name(bufnr)
+        -- leetcode.nvim stores solution files under stdpath('data')/leetcode/
+        if name:match("/leetcode/") then
+          return true
+        end
+        -- also skip its custom filetype if ever set
+        if vim.bo[bufnr].filetype == "leetcode.nvim" then
+          return true
+        end
+        return false
+      end
+    '';
 }

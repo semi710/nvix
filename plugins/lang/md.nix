@@ -1,10 +1,8 @@
 {
-  config,
   lib,
   ...
 }:
 let
-  inherit (config.nvix.mkKey) wKeyObj mkKeymap;
   inherit (lib.nixvim) mkRaw;
 in
 {
@@ -39,24 +37,6 @@ in
             };
           };
         };
-        # Skip render-markdown entirely for leetcode.nvim managed buffers/files.
-        ignore =
-          # lua
-          mkRaw ''
-            function(bufnr)
-              bufnr = bufnr or 0
-              local name = vim.api.nvim_buf_get_name(bufnr)
-              -- leetcode.nvim stores solution files under stdpath('data')/leetcode/
-              if name:match("/leetcode/") then
-                return true
-              end
-              -- also skip its custom filetype if ever set
-              if vim.bo[bufnr].filetype == "leetcode.nvim" then
-                return true
-              end
-              return false
-            end
-          '';
         # Don't conceal [[...]] when contents look like a LeetCode-style
         # numeric/array literal (e.g. [[1,2]], [["a","b"]]). Real wiki-links
         # such as [[My Note]] still render normally.
@@ -149,6 +129,43 @@ in
             if vim.b[args.buf]._nvix_md_keys then return end
             vim.b[args.buf]._nvix_md_keys = true
             local buf = args.buf
+
+            local function on_markdown_image()
+              local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+              local line = vim.api.nvim_get_current_line()
+              local pos = 1
+              while pos <= #line do
+                local s, e = line:find("!%[[^%]]*%]%([^%)]*%)", pos)
+                if not s then return false end
+                if col >= s and col <= e then return true end
+                pos = e + 1
+              end
+              return false
+            end
+
+            local function show_image_or_hover()
+              if on_markdown_image() then
+                Snacks.image.hover()
+                return
+              end
+
+              local ok, ufo = pcall(require, "ufo")
+              local winid = ok and ufo.peekFoldedLinesUnderCursor()
+              if not winid then
+                vim.cmd("Lspsaga hover_doc")
+              end
+            end
+
+            vim.keymap.set('n', 'K', show_image_or_hover,
+              { buffer = buf, desc = "Markdown image or hover doc", noremap = true, silent = true })
+
+            vim.api.nvim_create_autocmd('CursorHold', {
+              buffer = buf,
+              callback = function()
+                if on_markdown_image() then Snacks.image.hover() end
+              end,
+              desc = "Preview markdown image under cursor",
+            })
 
             -- <leader>pg  Glow (terminal) preview
             vim.api.nvim_buf_set_keymap(buf, 'n', '<leader>pg', '<cmd>Glow<CR>',
@@ -282,6 +299,4 @@ in
         '';
     }
   ];
-
-  wKeyList = [ ];
 }

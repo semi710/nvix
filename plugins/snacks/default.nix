@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib.nixvim) mkRaw;
 in
@@ -23,11 +28,17 @@ in
       statuscolumn.enabled = true;
       image = {
         enabled = true;
-        border = "none";
+        force = true;
         doc = {
-          conceal = true;
+          enabled = true;
+          float = true;
           inline = true;
+          max_height = 40;
+          max_width = 80;
         };
+      };
+      styles.snacks_image = {
+        border = "none";
       };
       notifier = {
         enabled = true;
@@ -91,10 +102,5 @@ in
     }
   ];
 
-  imports =
-    with builtins;
-    with lib;
-    map (fn: ./${fn}) (
-      filter (fn: (fn != "default.nix" && !hasSuffix ".md" "${fn}")) (attrNames (readDir ./.))
-    );
+  imports = inputs.nix-wire.lib.autoImport ./.;
 }
