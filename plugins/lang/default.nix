@@ -1,11 +1,11 @@
-{ lib, pkgs, ... }:
 {
-  imports =
-    with builtins;
-    with lib;
-    map (fn: ./${fn}) (
-      filter (fn: (fn != "default.nix" && !hasSuffix ".md" "${fn}")) (attrNames (readDir ./.))
-    );
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  imports = inputs.nix-wire.lib.autoImport ./.;
 
   # General file formatters
   plugins = {

@@ -1,15 +1,15 @@
 # This is common neovim settings with basic plugin sets
-{ config, lib, ... }:
+{
+  config,
+  inputs,
+  lib,
+  ...
+}:
 let
   inherit (lib.nixvim) mkRaw;
 in
 {
-  imports =
-    with builtins;
-    with lib;
-    map (fn: ./${fn}) (
-      filter (fn: (fn != "default.nix" && !hasSuffix ".md" "${fn}")) (attrNames (readDir ./.))
-    );
+  imports = inputs.nix-wire.lib.autoImport ./.;
   # allowUnfree is handled at the flake pkgs level, not in nixvim module
   # nixpkgs.config.allowUnfree = true;
   luaLoader.enable = false;
