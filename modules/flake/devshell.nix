@@ -23,6 +23,7 @@
         packages = with pkgs; [
           just
           nil
+          nixd
           nix-output-monitor
         ];
         shellHook = ''

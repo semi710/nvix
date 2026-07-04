@@ -13,14 +13,32 @@ in
     ])
     (wKeyObj [
       "<leader>l"
-      "󰿘"
+      ""
       "lsp"
     ])
   ];
 
-  plugins.lsp.keymaps.extra = [
-    (mkKeymap "n" "<leader>lO" "<cmd>lua require('otter').activate()<cr>" "Force Otter")
+  keymaps = [
+    (mkKeymap "n" "<leader>lO" (mkRaw ''
+      function()
+        local otter = require("otter")
+        local ok, keeper = pcall(require, "otter.keeper")
+        local bufnr = vim.api.nvim_get_current_buf()
 
+        if ok and keeper.rafts[bufnr] then
+          otter.deactivate()
+          vim.notify("Otter deactivated")
+        else
+          otter.activate()
+          if ok and keeper.rafts[bufnr] then
+            vim.notify("Otter activated")
+          end
+        end
+      end
+    '') "Toggle Otter")
+  ];
+
+  plugins.lsp.keymaps.extra = [
     # Lspsaga
 
     (mkKeymap "n" "<leader>la" "<cmd>:Lspsaga code_action<cr>" "Code Action")

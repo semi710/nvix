@@ -89,11 +89,15 @@ in
           # lua
           mkRaw ''
             function()
-              local clients = vim.lsp.get_clients()
+              local clients = vim.lsp.get_clients({ bufnr = 0 })
               local names = {}
               for _, client in ipairs(clients) do
                 if client.name ~= "copilot" and client.name ~= "null-ls" and client.name ~= "typos_lsp" then
-                  names[#names + 1] = client.name:gsub("%[%d+%]", "")
+                  local name = client.name:gsub("%[%d+%]", "")
+                  if client.name:match("^otter%-ls%[%d+%]$") then
+                    name = "%#Comment#" .. name .. "%*"
+                  end
+                  names[#names + 1] = name
                 end
               end
 
@@ -107,9 +111,7 @@ in
                 end
               end
 
-              local count = 0
-              for _ in pairs(names) do count = count + 1 end
-              if count == 0 then
+              if #names == 0 then
                 return "Ls Inactive"
               end
               return "[" .. table.concat(names, ", ") .. "]"

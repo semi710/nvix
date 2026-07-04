@@ -7,7 +7,6 @@
   ...
 }:
 let
-  inherit (config.nvix.mkKey) mkKeymap;
   inherit (config.nvix.icons.diagnostics)
     BoldError
     BoldWarning
@@ -24,10 +23,8 @@ let
   # nixvim maps server names to nixpkgs package names.
   nixvimPackages = (import "${inputs.nixvim}/modules/lsp/servers/packages.nix").packages;
 
-  # All servers enabled by default with package = null (use PATH binary).
-  # When a language file explicitly sets enable = true (priority 100, beating
-  # our mkDefault 1000), highestPrio drops below 1000 and we swap package to
-  # the nixpkgs derivation automatically. No mkLsp helper needed.
+  # Only explicitly enabled servers should start. For those, use nixpkgs
+  # packages when nixvim knows the mapping.
   mkServerConfig =
     name:
     let
@@ -35,12 +32,12 @@ let
       userEnabled = (options.plugins.lsp.servers.${name}.enable.highestPrio or 1500) < 1000;
     in
     {
-      enable = lib.mkDefault true;
+      enable = lib.mkDefault false;
       package = if userEnabled && pkgName != null then pkgs.${pkgName} else lib.mkDefault null;
     };
 
   overrides = {
-    pylsp.enable = lib.mkDefault true;
+    pylsp.enable = lib.mkDefault false;
     rust_analyzer.enable = lib.mkDefault false;
     vue_ls = (mkServerConfig "vue_ls") // {
       tslsIntegration = lib.mkDefault false;
@@ -65,7 +62,8 @@ in
   };
   plugins = {
     otter = {
-      enable = false;
+      enable = true;
+      autoActivate = false;
       settings.buffers = {
         set_filetype = true;
       };
@@ -74,9 +72,6 @@ in
     trouble.enable = true;
     tiny-inline-diagnostic.enable = true;
     lsp = {
-      keymaps.extra = [
-        (mkKeymap "n" "<leader>lO" "<cmd>lua require('otter').activate()<cr>" "Force Otter")
-      ];
       enable = true;
       inlayHints = true;
       servers = defaultServerConfigs // {
@@ -145,10 +140,5 @@ in
     };
   };
 
-  imports =
-    with builtins;
-    with lib;
-    map (fn: ./${fn}) (
-      filter (fn: (fn != "default.nix" && !hasSuffix ".md" "${fn}")) (attrNames (readDir ./.))
-    );
+  imports = inputs.nix-wire.lib.autoImport ./.;
 }
