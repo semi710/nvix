@@ -58,6 +58,7 @@ in
       settings.preset = "helix";
       settings.icons = {
         colors = true;
+        mappings = false;
         rules = [
           {
             pattern = "preview";

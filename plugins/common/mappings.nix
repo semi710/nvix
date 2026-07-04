@@ -192,7 +192,7 @@ in
     ])
     (wKeyObj [
       "<leader>i"
-      ""
+      ""
       "Insert"
     ])
     (wKeyObj [
@@ -202,7 +202,12 @@ in
     ])
     (wKeyObj [
       "z"
-      "󰘁"
+      ""
+      "fold"
+    ])
+    (wKeyObj [
+      "<leader>F"
+      ""
       "fold"
     ])
     (wKeyObj [
