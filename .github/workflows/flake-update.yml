@@ -1,0 +1,70 @@
+name: flake update
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: flake-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          extraPullNames: nix-community
+          extra_nix_config: |
+            access-tokens = github.com=${{ github.token }}
+            system-features = nixos-test benchmark big-parallel kvm
+
+      - uses: cachix/cachix-action@v15
+        with:
+          name: nvix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Update flake lock
+        run: nix flake update
+
+      - name: Check for lockfile changes
+        id: changes
+        run: |
+          if git diff --quiet flake.lock; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "flake.lock unchanged"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "flake.lock changed"
+          fi
+
+      - name: Build packages
+        if: steps.changes.outputs.changed == 'true'
+        run: nix build --accept-flake-config .#bare .#core .#full --no-link --print-out-paths
+
+      - name: Open PR
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="flake-update/$(date -u +%Y%m%d)-${GITHUB_RUN_ID}"
+          title="chore(flake): update lock"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add flake.lock
+          git commit -m "$title"
+          git push origin "$branch"
+          gh pr create \
+            --base master \
+            --head "$branch" \
+            --title "$title" \
+            --body "Weekly automated nix flake update. Builds passed for bare, core, and full on ubuntu-latest."
