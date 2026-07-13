@@ -56,6 +56,8 @@ jobs:
         run: |
           branch="flake-update/$(date -u +%Y%m%d)-${GITHUB_RUN_ID}"
           title="chore(flake): update lock"
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          body="$(printf 'Weekly automated nix flake update.\n\nBuild verification: %s\n\nBuilds passed for bare, core, and full on ubuntu-latest.\n\nPR CI may require manual approval because this PR is created by github-actions[bot].' "$run_url")"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -67,4 +69,4 @@ jobs:
             --base master \
             --head "$branch" \
             --title "$title" \
-            --body "Weekly automated nix flake update. Builds passed for bare, core, and full on ubuntu-latest."
+            --body "$body"
