@@ -9,7 +9,7 @@ in
     lsp.servers.texlab.enable = true;
     vimtex = {
       enable = true;
-      texlivePackage = pkgs.texlive.combined.scheme-full;
+      texlivePackage = pkgs.texliveSmall;
     };
   };
 
