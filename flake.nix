@@ -1,5 +1,4 @@
 {
-  # TODO: Make plugins lazy load as now keymap function is added
   description = "Neovim configuration with nix";
   nixConfig = {
     extra-substituters = "https://nvix.cachix.org";

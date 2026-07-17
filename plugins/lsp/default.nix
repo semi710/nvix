@@ -64,6 +64,12 @@ in
     otter = {
       enable = true;
       autoActivate = false;
+      # Only relevant in docs with embedded code blocks; ~3ms deferred.
+      lazyLoad.settings.ft = [
+        "markdown"
+        "quarto"
+        "typst"
+      ];
       settings.buffers = {
         set_filetype = true;
       };

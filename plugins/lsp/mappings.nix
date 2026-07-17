@@ -21,16 +21,17 @@ in
   keymaps = [
     (mkKeymap "n" "<leader>lO" (mkRaw ''
       function()
-        local otter = require("otter")
-        local ok, keeper = pcall(require, "otter.keeper")
+        local ok, otter = pcall(require, "otter")
+        if not ok then return end
+        local ok2, keeper = pcall(require, "otter.keeper")
         local bufnr = vim.api.nvim_get_current_buf()
 
-        if ok and keeper.rafts[bufnr] then
+        if ok2 and keeper.rafts[bufnr] then
           otter.deactivate()
           vim.notify("Otter deactivated")
         else
           otter.activate()
-          if ok and keeper.rafts[bufnr] then
+          if ok2 and keeper.rafts[bufnr] then
             vim.notify("Otter activated")
           end
         end

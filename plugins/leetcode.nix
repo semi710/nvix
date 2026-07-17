@@ -5,6 +5,8 @@ in
 {
   plugins.leetcode = {
     enable = true;
+    # Heavy plugin only used on demand via :Leet.
+    lazyLoad.settings.cmd = [ "Leet" ];
     settings.lang = "python3";
     package = pkgs.vimPlugins.leetcode-nvim.overrideAttrs (oa: {
       src = pkgs.fetchFromGitHub {

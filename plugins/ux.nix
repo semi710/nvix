@@ -18,6 +18,11 @@
   plugins = {
     colorizer = {
       enable = true;
+      # Only needed once a buffer is displayed; defers ~3ms of startup.
+      lazyLoad.settings.event = [
+        "BufRead"
+        "BufNewFile"
+      ];
       settings = {
         filetypes = {
           __unkeyed = "*";
@@ -33,7 +38,9 @@
           tailwind = true;
           mode = "virtualtext";
           virtualtext = "■";
-          always_update = true;
+          # Re-highlighting on every text change is a per-keystroke cost;
+          # updating on read/enter is enough for color swatches.
+          always_update = false;
         };
       };
     };

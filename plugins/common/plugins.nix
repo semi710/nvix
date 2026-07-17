@@ -6,18 +6,45 @@ in
   extraPlugins = with pkgs.vimPlugins; [
     stay-centered-nvim
     mini-icons
+    vim-startuptime
   ];
+  extraConfigVim = ''
+    let g:startuptime_exe_path = v:progpath
+    let s:packdir = split(&packpath, ',')[0]
+    let s:rtpdir = split(&runtimepath, ',')[0]
+    let g:startuptime_exe_args = ['--headless', '--cmd', 'set packpath^=' . s:packdir, '--cmd', 'set rtp^=' . s:rtpdir]
+  '';
   plugins = {
     # Must have plugins to have a decent flow of work
-    cord.enable = true;
+    cord = {
+      enable = true;
+      # Discord presence only matters once a buffer is open.
+      lazyLoad.settings.event = [ "BufRead" ];
+    };
     remote-nvim = {
       enable = true;
       package = pkgs.vimPlugins.remote-nvim-nvim.overrideAttrs (_: {
         dontPatchShebangs = true;
       });
+      lazyLoad.settings.cmd = [
+        "RemoteStart"
+        "RemoteStop"
+        "RemoteInfo"
+        "RemoteLog"
+        "RemoteCleanup"
+        "RemoteConfig"
+        "RemoteConfigDel"
+      ];
     };
     codesnap = {
       enable = true;
+      lazyLoad.settings.cmd = [
+        "CodeSnap"
+        "CodeSnapSave"
+        "CodeSnapHighlight"
+        "CodeSnapHighlightSave"
+        "CodeSnapASCII"
+      ];
       settings = {
         snapshot_config = {
           background.stops = [

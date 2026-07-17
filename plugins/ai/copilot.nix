@@ -7,6 +7,15 @@ in
   plugins = {
     chatgpt = {
       enable = true;
+      # Only needed when invoking a ChatGPT command; defers ~13ms of startup
+      # (chatgpt + telescope deps).
+      lazyLoad.settings.cmd = [
+        "ChatGPT"
+        "ChatGPTActAs"
+        "ChatGPTCompleteCode"
+        "ChatGPTEditWithInstructions"
+        "ChatGPTRun"
+      ];
       settings = {
         keymaps = {
           submit = "<C-Enter>";

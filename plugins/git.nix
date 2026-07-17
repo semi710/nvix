@@ -8,6 +8,17 @@ in
   plugins = {
     diffview = {
       enable = true;
+      # Only needed when opening a diffview; defers ~2ms + deps.
+      lazyLoad.settings.cmd = [
+        "DiffviewOpen"
+        "DiffviewFileHistory"
+        "DiffviewClose"
+        "DiffviewFocusFiles"
+        "DiffviewToggleFiles"
+        "DiffviewRefresh"
+        "DiffviewLog"
+        "DiffviewGlobal"
+      ];
       settings = {
         file_panel.win_config = {
           position = "right";
