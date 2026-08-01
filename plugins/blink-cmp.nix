@@ -40,7 +40,7 @@ in
             "scroll_documentation_down"
             "fallback"
           ];
-          "<C-space>" = [
+          "<M-;>" = [
             (
               # lua
               mkRaw ''
