@@ -9,7 +9,8 @@ in
     lsp.servers.texlab.enable = true;
     vimtex = {
       enable = true;
-      texlivePackage = pkgs.texliveSmall;
+      # texliveSmall doesn't include latexmk; vimtex needs it as the default compiler
+      texlivePackage = pkgs.texliveSmall.withPackages (ps: [ ps.latexmk ]);
     };
   };
 
@@ -51,6 +52,7 @@ in
     {
       __unkeyed-1 = "<localleader>ll";
       __unkeyed-2 = "<plug>(vimtex-compile)";
+      remap = true;
       desc = "Compile";
       mode = [ "n" ];
       icon = {
@@ -74,6 +76,7 @@ in
     {
       __unkeyed-1 = "<localleader>lS";
       __unkeyed-2 = "<plug>(vimtex-compile-selected)";
+      remap = true;
       desc = "Compile selected";
       icon = {
         icon = "";
@@ -87,6 +90,7 @@ in
     {
       __unkeyed-1 = "<localleader>li";
       __unkeyed-2 = "<plug>(vimtex-info)";
+      remap = true;
       desc = "Information";
       mode = [ "n" ];
       icon = {
@@ -97,6 +101,7 @@ in
     {
       __unkeyed-1 = "<localleader>lI";
       __unkeyed-2 = "<plug>(vimtex-info-full)";
+      remap = true;
       desc = "Full information";
       mode = [ "n" ];
       icon = {
@@ -107,6 +112,7 @@ in
     {
       __unkeyed-1 = "<localleader>lt";
       __unkeyed-2 = "<plug>(vimtex-toc-open)";
+      remap = true;
       desc = "Table of Contents";
       mode = [ "n" ];
       icon = {
@@ -117,6 +123,7 @@ in
     {
       __unkeyed-1 = "<localleader>lT";
       __unkeyed-2 = "<plug>(vimtex-toc-toggle)";
+      remap = true;
       desc = "Toggle table of Contents";
       mode = [ "n" ];
       icon = {
@@ -127,6 +134,7 @@ in
     {
       __unkeyed-1 = "<localleader>lq";
       __unkeyed-2 = "<plug>(vimtex-log)";
+      remap = true;
       desc = "Log";
       mode = [ "n" ];
       icon = {
@@ -137,6 +145,7 @@ in
     {
       __unkeyed-1 = "<localleader>lv";
       __unkeyed-2 = "<plug>(vimtex-view)";
+      remap = true;
       desc = "View";
       mode = [ "n" ];
       icon = {
@@ -147,6 +156,7 @@ in
     {
       __unkeyed-1 = "<localleader>lr";
       __unkeyed-2 = "<plug>(vimtex-reverse-search)";
+      remap = true;
       desc = "Reverse search";
       mode = [ "n" ];
       icon = {
@@ -157,6 +167,7 @@ in
     {
       __unkeyed-1 = "<localleader>lk";
       __unkeyed-2 = "<plug>(vimtex-stop)";
+      remap = true;
       desc = "Stop";
       mode = [ "n" ];
       icon = {
@@ -167,6 +178,7 @@ in
     {
       __unkeyed-1 = "<localleader>lK";
       __unkeyed-2 = "<plug>(vimtex-stop-all)";
+      remap = true;
       desc = "Stop all";
       mode = [ "n" ];
       icon = {
@@ -177,6 +189,7 @@ in
     {
       __unkeyed-1 = "<localleader>le";
       __unkeyed-2 = "<plug>(vimtex-errors)";
+      remap = true;
       desc = "Errors";
       mode = [ "n" ];
       icon = {
@@ -187,6 +200,7 @@ in
     {
       __unkeyed-1 = "<localleader>lo";
       __unkeyed-2 = "<plug>(vimtex-compile-output)";
+      remap = true;
       desc = "Compile output";
       mode = [ "n" ];
       icon = {
@@ -197,6 +211,7 @@ in
     {
       __unkeyed-1 = "<localleader>lg";
       __unkeyed-2 = "<plug>(vimtex-status)";
+      remap = true;
       desc = "Status";
       mode = [ "n" ];
       icon = {
@@ -207,6 +222,7 @@ in
     {
       __unkeyed-1 = "<localleader>lG";
       __unkeyed-2 = "<plug>(vimtex-status-full)";
+      remap = true;
       desc = "Full status";
       mode = [ "n" ];
       icon = {
@@ -217,6 +233,7 @@ in
     {
       __unkeyed-1 = "<localleader>lc";
       __unkeyed-2 = "<plug>(vimtex-clean)";
+      remap = true;
       desc = "Clean";
       mode = [ "n" ];
       icon = {
@@ -237,6 +254,7 @@ in
     {
       __unkeyed-1 = "<localleader>lC";
       __unkeyed-2 = "<plug>(vimtex-clean-full)";
+      remap = true;
       desc = "Full clean";
       mode = [ "n" ];
       icon = {
@@ -247,6 +265,7 @@ in
     {
       __unkeyed-1 = "<localleader>lx";
       __unkeyed-2 = "<plug>(vimtex-reload)";
+      remap = true;
       desc = "Reload";
       mode = [ "n" ];
       icon = {
@@ -257,6 +276,7 @@ in
     {
       __unkeyed-1 = "<localleader>lX";
       __unkeyed-2 = "<plug>(vimtex-reload-state)";
+      remap = true;
       desc = "Reload state";
       mode = [ "n" ];
       icon = {
@@ -267,6 +287,7 @@ in
     {
       __unkeyed-1 = "<localleader>lm";
       __unkeyed-2 = "<plug>(vimtex-imaps-list)";
+      remap = true;
       desc = "Input mappings";
       mode = [ "n" ];
       icon = {
@@ -277,6 +298,7 @@ in
     {
       __unkeyed-1 = "<localleader>ls";
       __unkeyed-2 = "<plug>(vimtex-toggle-main)";
+      remap = true;
       desc = "Toggle main";
       mode = [ "n" ];
       icon = {
@@ -287,6 +309,7 @@ in
     {
       __unkeyed-1 = "<localleader>la";
       __unkeyed-2 = "<plug>(vimtex-context-menu)";
+      remap = true;
       desc = "Context menu";
       mode = [ "n" ];
       icon = {

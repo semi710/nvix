@@ -4,18 +4,12 @@
     mini-ai.enable = true;
     treesitter = {
       enable = true;
+      highlight = {
+        enable = true;
+        # Vimtex provides syntax highlighting for latex; tree-sitter clashes with it
+        disable = [ "latex" ];
+      };
       settings = {
-        highlight = {
-          # TODO: remove once this is fully migrated
-          # evaluation warning: Nixvim (plugins.treesitter): `plugins.treesitter.settings.highlight.disable` is an upstream legacy nvim-treesitter
-          # option. For Nixvim's native highlighting support with the modern nvim-treesitter main
-          # branch, use `plugins.treesitter.highlight.disable` instead.
-          enable = true; # enabled back again cause it's not highlighting everything
-          # disable = [
-          #   "latex"
-          #   "markdown"
-          # ];
-        };
         grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
         indent_enable = true;
         folding = true;
