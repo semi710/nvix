@@ -26,7 +26,7 @@ nvix/
 │   └── tex.nix               # LaTeX (vimtex + texlab + texpresso)
 ├── overlays/default.nix      # nixpkgs overlays (kulala-core fix)
 ├── modules/flake/            # Flake-level: pkgs wiring, devshell
-└── .github/workflows/        # CI: docs deploy
+└── .github/workflows/        # CI: build + format check, docs deploy, flake update
 ```
 
 ## Auto-discovery
@@ -106,5 +106,5 @@ path that breaks in Nix. Applied via flake-parts `perSystem`.
 
 `modules/flake/devshell.nix` provides:
 
-- `just`, `nil` (LSP), `nix-output-monitor`, `nixfmt`
-- Pre-commit hook: `nixfmt` on all `.nix` files
+- `just`, `nil` (LSP), `nixd` (LSP), `nix-output-monitor`
+- Pre-commit hook: `treefmt` (uses `nixfmt`) on all `.nix` files

@@ -42,7 +42,7 @@ in
       # lua
       mkRaw ''
         function()
-          harpoon = require("harpoon")
+          local harpoon = require("harpoon")
           harpoon:list():add()
         end
       ''
@@ -51,7 +51,7 @@ in
       # lua
       mkRaw ''
         function()
-          harpoon = require("harpoon")
+          local harpoon = require("harpoon")
           harpoon.ui:toggle_quick_menu(harpoon:list())
         end
       ''

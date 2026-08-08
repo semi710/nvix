@@ -10,6 +10,7 @@ in
       settings = {
         # Use Lua implementation to avoid pre-built binary download issues
         fuzzy.implementation = "lua";
+        snippets.preset = "luasnip";
 
         completion.menu.border = "rounded";
         # Don't preselect the first item; <C-j>/<C-n> picks index 1 on first press.
@@ -47,10 +48,6 @@ in
                 function(cmp)
                   local ok,_ = pcall(require, "copilot")
                     if ok then
-                      vim.g.copilot_no_tab_map = true
-                      vim.g.copilot_assume_mapped = true
-                      vim.g.copilot_tab_fallback = ""
-
                       local suggestion = require("copilot.suggestion")
                       if suggestion.is_visible() then
                         suggestion.accept()

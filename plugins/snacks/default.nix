@@ -51,7 +51,6 @@ in
   extraPackages = with pkgs; [
     imagemagick
     ghostscript_headless
-    tectonic
     mermaid-cli
     dwt1-shell-color-scripts
   ]; # for image support

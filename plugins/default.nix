@@ -17,7 +17,7 @@ let
         builtins.readDir
         (mapAttrsMaybe (
           fn: type:
-          if type == "regular" then
+          if type == "regular" && fn != "default.nix" then
             let
               name = lib.removeSuffix ".nix" fn;
             in

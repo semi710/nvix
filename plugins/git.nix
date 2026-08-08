@@ -96,7 +96,7 @@ in
       mkRaw ''
         function ()
           if vim.wo.diff then
-            vim.cmd.normal ({ ' ]c', bang = true})
+            vim.cmd.normal ({']c', bang = true})
         else
             require('gitsigns').nav_hunk('next')
           end

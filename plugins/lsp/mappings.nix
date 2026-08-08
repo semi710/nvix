@@ -42,7 +42,7 @@ in
   plugins.lsp.keymaps.extra = [
     # Lspsaga
 
-    (mkKeymap "n" "<leader>la" "<cmd>:Lspsaga code_action<cr>" "Code Action")
+    (mkKeymap "n" "<leader>la" "<cmd>Lspsaga code_action<cr>" "Code Action")
     (mkKeymap "n" "<leader>lo" "<cmd>Lspsaga outline<cr>" "Outline")
     (mkKeymap "n" "<leader>lw" "<cmd>Lspsaga show_workspace_diagnostics<cr>" "Workspace Diagnostics")
     (mkKeymap "n" "gd" "<cmd>Lspsaga goto_definition<cr>" "Definitions")
@@ -57,7 +57,7 @@ in
       function()
         local ok, ufo = pcall(require, "ufo")
         if ok then
-          winid = ufo.peekFoldedLinesUnderCursor()
+          local winid = ufo.peekFoldedLinesUnderCursor()
         end
         if not winid then
           vim.cmd("Lspsaga hover_doc")
@@ -94,23 +94,38 @@ in
       ''
     ) "Peek Folded Lines")
 
-    (mkKeymap "n" "<leader>lq" "<CMD>LspStop<Enter>" "Stop LSP")
+    (mkKeymap "n" "<leader>lq" (mkRaw ''
+      function()
+        for _, c in ipairs(vim.lsp.get_clients()) do c:stop() end
+        vim.notify("LSP clients stopped")
+      end
+    '') "Stop LSP")
     (mkKeymap "n" "<leader>li" "<cmd>checkhealth vim.lsp<cr>" "LSP Info")
-    (mkKeymap "n" "<leader>ls" "<CMD>LspStart<Enter>" "Start LSP")
-    (mkKeymap "n" "<leader>lR" "<CMD>LspRestart<Enter>" "Restart LSP")
+    (mkKeymap "n" "<leader>ls" (mkRaw ''
+      function()
+        vim.cmd('doautocmd FileType')
+        vim.notify("LSP clients started")
+      end
+    '') "Start LSP")
+    (mkKeymap "n" "<leader>lR" (mkRaw ''
+      function()
+        for _, c in ipairs(vim.lsp.get_clients()) do c:stop() end
+        vim.cmd('doautocmd FileType')
+        vim.notify("LSP clients restarted")
+      end
+    '') "Restart LSP")
 
-    (mkKeymap "n" "<C-s-k>" "<cmd>:lua vim.lsp.buf.signature_help()<cr>" "Signature Help")
-    (mkKeymap "n" "<leader>lD" "<cmd>:lua Snacks.picker.lsp_definitions()<cr>" "Definitions list")
-    (mkKeymap "n" "<leader>ls" "<cmd>:lua Snacks.picker.lsp_symbols()<cr>" "Definitions list")
+    (mkKeymap "n" "<C-s-k>" "<cmd>lua vim.lsp.buf.signature_help()<cr>" "Signature Help")
+    (mkKeymap "n" "<leader>lD" "<cmd>lua Snacks.picker.lsp_definitions()<cr>" "Definitions list")
+    (mkKeymap "n" "<leader>lS" "<cmd>lua Snacks.picker.lsp_symbols()<cr>" "Document Symbols")
 
-    (mkKeymap "n" "<leader>lf" "<cmd>:lua require('conform').format()<cr>" "Format file")
-    (mkKeymap "x" "<leader>lf" "<cmd>:lua require('conform').format()<cr>" "Format File")
-    (mkKeymap "v" "<leader>lf" "<cmd>:lua require('conform').format()<cr>" "Format File")
+    (mkKeymap "n" "<leader>lf" "<cmd>lua require('conform').format()<cr>" "Format file")
+    (mkKeymap "x" "<leader>lf" "<cmd>lua require('conform').format()<cr>" "Format File")
+    (mkKeymap "v" "<leader>lf" "<cmd>lua require('conform').format()<cr>" "Format File")
 
-    (mkKeymap "n" "[d" "<cmd>:lua vim.diagnostic.goto_prev()<cr>" "Previous Diagnostic")
-    (mkKeymap "n" "]d" "<cmd>:lua vim.diagnostic.goto_next()<cr>" "Next Diagnostic")
-    (mkKeymap "n" "gr" "<cmd>:Trouble lsp_references<cr>" "Trouble Lsp References")
-    (mkKeymap "n" "gd" "<cmd>:Trouble lsp_definitions<cr>" "Trouble Lsp References")
+    (mkKeymap "n" "[d" "<cmd>lua vim.diagnostic.goto_prev()<cr>" "Previous Diagnostic")
+    (mkKeymap "n" "]d" "<cmd>lua vim.diagnostic.goto_next()<cr>" "Next Diagnostic")
+    (mkKeymap "n" "gr" "<cmd>Trouble lsp_references<cr>" "Trouble Lsp References")
     (mkKeymap "n" "<leader>lL" (
       # lua
       mkRaw ''

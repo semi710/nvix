@@ -25,7 +25,7 @@ nix run github:semi710/nvix#core -- file.py
   inputs.nvix.url = "github:semi710/nvix";
 
   outputs = { self, nixpkgs, nvix, ... }@inputs: {
-    homeConfiguration = {
+    homeConfigurations = {
       "user@host" = inputs.home-manager.lib.homeManagerConfiguration {
         modules = [({ pkgs, ... }: {
           home.packages = [ nvix.packages.${pkgs.system}.core ];
@@ -90,7 +90,7 @@ nix.settings = {
 ```bash
 git clone --single-branch --branch master https://github.com/semi710/nvix.git
 cd nvix
-nix develop  # devshell with nixfmt, nil, just, nom
+nix develop  # devshell with nil, nixd, just, nom
 ```
 
-Pre-commit runs `nixfmt` on all `.nix` files.
+Pre-commit runs `treefmt` (which uses `nixfmt`) on all `.nix` files.

@@ -107,8 +107,8 @@ in
     glow = {
       enable = true;
       lazyLoad.settings = {
-        ft = "markdown";
-        cmd = "Glow";
+        ft = [ "markdown" ];
+        cmd = [ "Glow" ];
       };
     };
   };
@@ -168,8 +168,8 @@ in
             })
 
             -- <leader>pg  Glow (terminal) preview
-            vim.api.nvim_buf_set_keymap(buf, 'n', '<leader>pg', '<cmd>Glow<CR>',
-              { desc = "Markdown Glow preview", noremap = true, silent = true })
+            vim.keymap.set('n', '<leader>pg', '<cmd>Glow<CR>',
+              { buffer = buf, desc = "Markdown Glow preview", silent = true })
 
             -- <leader>pb  Browser preview + copy localhost URL to clipboard
             vim.keymap.set('n', '<leader>pb', function()
@@ -188,10 +188,6 @@ in
                 end
               end, 500)
             end, { buffer = buf, desc = "Markdown Browser Preview + Copy URL", noremap = true, silent = true })
-
-            -- <leader>pp  Print to PDF via pandoc
-            vim.api.nvim_buf_set_keymap(buf, 'n', '<leader>pp', '<cmd>lua require("md-pdf").convert_md_to_pdf()<CR>',
-              { desc = "Markdown Print pdf", noremap = true, silent = true })
 
             -- gd: follow markdown link under cursor, else fall back to LSP definition
             vim.keymap.set('n', 'gd', function()

@@ -63,7 +63,7 @@ let
           function()
             local any_diff = false
             for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-              if vim.api.nvim_win_get_option(w, "diff") then
+              if vim.wo[w].diff then
                 any_diff = true
                 break
               end
@@ -141,7 +141,9 @@ let
     (mkKeymap "n" "<leader>uC" (
       # lua
       mkRaw ''
-        require('stay-centered').toggle
+        function()
+          require('stay-centered').toggle()
+        end
       ''
     ) "Toggle stay-centered.nvim")
     (mkKeymap "n" "<leader>ft" (
@@ -177,13 +179,13 @@ in
       "<leader>A"
       ""
       ""
-      "true"
+      true
     ])
     (wKeyObj [
       "<leader><leader>"
       ""
       ""
-      "true"
+      true
     ])
     (wKeyObj [
       "<leader>q"
@@ -198,18 +200,14 @@ in
     (wKeyObj [
       "<leader>v"
       "󰩬"
-      "Insert"
+      "treesitter"
     ])
     (wKeyObj [
       "z"
-      ""
+      ""
       "fold"
     ])
-    (wKeyObj [
-      "<leader>F"
-      ""
-      "fold"
-    ])
+    # <leader>F fold group removed - no keymaps defined
     (wKeyObj [
       "g"
       "󰿘"
@@ -230,11 +228,7 @@ in
       "󰔎"
       "ui"
     ])
-    (wKeyObj [
-      "<leader>o"
-      ""
-      "Open"
-    ])
+    # <leader>o Open group removed - no keymaps defined
     (wKeyObj [
       "<leader>d"
       ""
@@ -259,21 +253,20 @@ in
 
   extraConfigLua = # lua
     ''
-
       -- Use black hole register for 'x', 'X', 'c', 'C'
-      vim.api.nvim_set_keymap('n', 'x', '"_x', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', 'X', '"_X', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', 'c', '"_c', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', 'C', '"_C', { noremap = true, silent = true })
+      vim.keymap.set('n', 'x', '"_x', { silent = true, remap = false })
+      vim.keymap.set('n', 'X', '"_X', { silent = true, remap = false })
+      vim.keymap.set('n', 'c', '"_c', { silent = true, remap = false })
+      vim.keymap.set('n', 'C', '"_C', { silent = true, remap = false })
 
       -- Visual mode
-      vim.api.nvim_set_keymap('v', 'x', '"_d', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('v', 'X', '"_d', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('v', 'c', '"_c', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('v', 'C', '"_c', { noremap = true, silent = true })
+      vim.keymap.set('v', 'x', '"_d', { silent = true, remap = false })
+      vim.keymap.set('v', 'X', '"_d', { silent = true, remap = false })
+      vim.keymap.set('v', 'c', '"_c', { silent = true, remap = false })
+      vim.keymap.set('v', 'C', '"_c', { silent = true, remap = false })
 
       -- In visual mode, paste from the clipboard without overwriting it
-      vim.api.nvim_set_keymap("v", "p", '"_dP', { noremap = true, silent = true })
+      vim.keymap.set("v", "p", '"_dP', { silent = true, remap = false })
 
       -- Only this hack works in command mode
       vim.cmd([[

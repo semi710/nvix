@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   plugins = {
     mini-ai.enable = true;
@@ -9,13 +9,9 @@
         # Vimtex provides syntax highlighting for latex; tree-sitter clashes with it
         disable = [ "latex" ];
       };
-      settings = {
-        grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
-        indent_enable = true;
-        folding = true;
-        autoLoad = true;
-        incremental_selection.enable = true;
-      };
+      indent.enable = true;
+      folding.enable = true;
+      autoLoad = true;
     };
     treesitter-context = {
       enable = true;

@@ -5,7 +5,7 @@ as leader unless changed via `nvix.leader`.
 
 ---
 
-## General (common/mappings.nix)
+## General (common/mappings.nix + common/plugins.nix)
 
 | Key | Mode | Action |
 |-----|------|--------|

@@ -8,7 +8,6 @@
         inherit desc;
         silent = true;
         noremap = true;
-        remap = true;
       };
     };
 
