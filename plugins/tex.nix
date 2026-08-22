@@ -9,8 +9,7 @@ in
     lsp.servers.texlab.enable = true;
     vimtex = {
       enable = true;
-      # texliveSmall doesn't include latexmk; vimtex needs it as the default compiler
-      texlivePackage = pkgs.texliveSmall.withPackages (ps: [ ps.latexmk ]);
+      texlivePackage = pkgs.texliveFull;
     };
   };
 
@@ -22,6 +21,30 @@ in
     vim.g.vimtex_quickfix_ignore_filters = { 'warning' }
     vim.g.vimtex_quickfix_open_on_warning = 0
     vim.g.vimtex_mappings_enabled = 0
+    if vim.fn.executable('zathura') == 1 then
+      vim.g.vimtex_view_method = 'zathura'
+
+      if vim.fn.has('mac') == 1 then
+        -- macOS lacks xdotool and /etc/machine-id, so vimtex's built-in
+        -- auto-view and synctex break. Use pgrep-based autocmd instead.
+        vim.g.vimtex_view_automatic = 0
+        vim.g.vimtex_view_zathura_use_synctex = 0
+        vim.g.vimtex_view_forward_search_on_start = 0
+
+        vim.api.nvim_create_autocmd('User', {
+          pattern = 'VimtexEventCompileSuccess',
+          callback = function()
+            local pdf_name = vim.fn.fnamemodify(vim.fn.expand('%:t'), ':r') .. '.pdf'
+            local running = vim.fn.system('pgrep -nf "zathura.*' .. pdf_name .. '"')
+            if #running == 0 then
+              vim.cmd('VimtexView')
+            end
+          end,
+        })
+      else
+        vim.g.vimtex_view_automatic = 1
+      end
+    end
   '';
 
   globals.maplocalleader = " t"; # Set the local leader to "<leader>t"
