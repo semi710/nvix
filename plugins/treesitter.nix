@@ -1,5 +1,7 @@
 { ... }:
 {
+  # treesitter folding without this opens every file fully collapsed
+  opts.foldlevelstart = 99;
   plugins = {
     mini-ai.enable = true;
     treesitter = {
