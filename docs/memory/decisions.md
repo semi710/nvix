@@ -9,7 +9,10 @@ No runtime plugin manager needed - Nix is the plugin manager.
 
 Different machines need different things:
 
-- **bare** for ISOs and servers where you just need to edit files
+- **bare** as the lean AI-diff-review variant (git, lazygit, 33 treesitter
+  grammars, no images/ruby) that also covers ISOs and servers - merged the
+  former `ai` package into it and purged the old bufferline/harpoon `bare`
+  (those live in `core` now)
 - **core** for daily work - LSP, completion, git, languages
 - **full** for LaTeX users who need the full texlive scheme
 

@@ -40,7 +40,7 @@ A **modular** Neovim configuration powered by
 ## Quick start
 
 ```bash
-nix run github:semi710/nvix#bare    # minimal
+nix run github:semi710/nvix#bare    # minimal / AI diff review
 nix run github:semi710/nvix#core    # daily driver
 nix run github:semi710/nvix#full    # everything (+ LaTeX)
 ```

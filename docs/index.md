@@ -16,16 +16,16 @@ Consumed by [ndots](https://ndots.semi.sh) <a href="https://github.com/semi710/n
 
 | Variant | Use case | Includes |
 |---------|----------|----------|
-| `bare` | Servers, quick edits, ISOs | common, buffer, ux, snacks |
-| `core` | Daily driver (default) | bare + git, LSP, treesitter, completion, languages, AI, noice, lualine, autosession |
+| `bare` | Review AI changes / minimal editing | common, git, snacks (lazygit, no image deps), treesitter (33 grammars) |
+| `core` | Daily driver (default) | bare features + buffer, ux, noice, lualine, firenvim, leetcode, blink-cmp, lang, lsp, autosession, AI - full grammars + image support |
 | `full` | Everything | core + LaTeX (vimtex, texlab, texpresso) |
 
 ## Quick start
 
 ```bash
-nix run github:semi710/nvix#bare    # minimal
-nix run github:semi710/nvix#core   # daily driver
-nix run github:semi710/nvix#full   # everything
+nix run github:semi710/nvix#bare    # minimal / AI diff review
+nix run github:semi710/nvix#core    # daily driver
+nix run github:semi710/nvix#full    # everything
 ```
 
 Or as a flake input:
