@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -48,6 +49,18 @@ in
         '';
     }
   ];
+  # kulala probes for parser/kulala_http.dylib on macOS and so misses the
+  # .so-named grammar nixpkgs ships as a kulala dependency; without this
+  # kulala tries to rebuild the grammar with a tree-sitter CLI the wrapped
+  # nvim does not have and never starts its inlay-hint LSP
+  extraPlugins = lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
+    (pkgs.runCommand "kulala-http-parser-dylib" { } ''
+      mkdir -p $out/parser
+      ln -s ${lib.head pkgs.vimPlugins.kulala-nvim.dependencies}/parser/kulala_http.so \
+        $out/parser/kulala_http.dylib
+    '')
+  ];
+
   plugins = {
     kulala = {
       enable = true; # for rest api (alter to insomnia and postman)
