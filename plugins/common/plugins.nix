@@ -21,21 +21,6 @@ in
       # Discord presence only matters once a buffer is open.
       lazyLoad.settings.event = [ "BufRead" ];
     };
-    remote-nvim = {
-      enable = true;
-      package = pkgs.vimPlugins.remote-nvim-nvim.overrideAttrs (_: {
-        dontPatchShebangs = true;
-      });
-      lazyLoad.settings.cmd = [
-        "RemoteStart"
-        "RemoteStop"
-        "RemoteInfo"
-        "RemoteLog"
-        "RemoteCleanup"
-        "RemoteConfig"
-        "RemoteConfigDel"
-      ];
-    };
     codesnap = {
       enable = true;
       lazyLoad.settings.cmd = [
