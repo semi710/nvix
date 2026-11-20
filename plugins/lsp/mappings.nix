@@ -120,6 +120,8 @@ in
     (mkKeymap "n" "<leader>lS" "<cmd>lua Snacks.picker.lsp_symbols()<cr>" "Document Symbols")
 
     (mkKeymap "n" "<leader>lf" "<cmd>lua require('conform').format()<cr>" "Format file")
+    (mkKeymap "n" "<leader>uf" "<cmd>lua require('conform').format()<cr>" "Format file")
+    (mkKeymap "v" "<leader>uf" "<cmd>lua require('conform').format()<cr>" "Format File")
     (mkKeymap "x" "<leader>lf" "<cmd>lua require('conform').format()<cr>" "Format File")
     (mkKeymap "v" "<leader>lf" "<cmd>lua require('conform').format()<cr>" "Format File")
 

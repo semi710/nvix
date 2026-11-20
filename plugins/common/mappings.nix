@@ -226,7 +226,7 @@ in
     (wKeyObj [
       "<leader>u"
       "󰔎"
-      "ui"
+      "utility"
     ])
     # <leader>o Open group removed - no keymaps defined
     (wKeyObj [
