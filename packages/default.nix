@@ -23,7 +23,8 @@ let
     { config, ... }:
     {
       imports = [ self.nvixPlugins.snacks ];
-      # mkForce replaces snacks' imagemagick/ghostscript/mermaid-cli (~0.9 GiB)
+      # mkForce replaces snacks' imagemagick/ghostscript (~1 GiB; mermaid-cli
+      # now stays out of every variant and resolves from $PATH)
       extraPackages =
         with pkgs;
         lib.mkForce [
@@ -31,8 +32,6 @@ let
           lazygit
           dwt1-shell-color-scripts # snacks dashboard shells out to `colorscript`
         ];
-      # ruby provider is dead weight here; treesitter does the highlighting
-      withRuby = false;
       plugins.snacks.settings.image = lib.mkForce { enabled = false; };
       # default ships all 328 grammars; ~30 cover the languages a diff review
       # actually meets, unknown files fall back to regex highlighting
@@ -111,6 +110,10 @@ let
     self.nvixPlugins.ux # better user experience
     self.nvixPlugins.snacks
 
+    # markdown preview with mermaid/math images (kitty graphics); brings
+    # its renderer and a headless browser, so bare stays without it
+    flake.inputs.vellum.nixvimModules.default
+
     # noice for cmdline
     self.nvixPlugins.noice
 
@@ -124,6 +127,7 @@ let
 
     # Code editing and syntax
     self.nvixPlugins.treesitter
+    self.nvixPlugins.csv
     self.nvixPlugins.blink-cmp
     self.nvixPlugins.lang
     self.nvixPlugins.lsp

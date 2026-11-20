@@ -19,6 +19,10 @@
 
     nix-wire.url = "github:semi710/nix-wire";
     nix-wire.inputs.nixpkgs.follows = "nixpkgs";
+
+    # markdown preview beside the buffer, diagrams/math as images over the
+    # kitty graphics protocol; ships its nixvim module
+    vellum.url = "github:blackhat-7/vellum.nvim";
   };
 
   outputs =

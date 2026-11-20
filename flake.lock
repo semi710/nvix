@@ -138,6 +138,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1793582901,
+        "narHash": "sha256-WDValiY9se78X2Wh7aWWaq/c7HN29U555+OKbHEzYrw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5c9de89ec55bff981cb8da1a4ee92b10f1438ffc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -166,7 +182,8 @@
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "systems": "systems_2",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix",
+        "vellum": "vellum"
       }
     },
     "systems": {
@@ -216,6 +233,24 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "vellum": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1794117197,
+        "narHash": "sha256-LKFHxe+n/Rugg5hTsRjKtu+f8Yr9cPOPgLoOcin+HBk=",
+        "owner": "blackhat-7",
+        "repo": "vellum.nvim",
+        "rev": "4ec5d4979f7d3fb08a799a432a71b4c7feee9144",
+        "type": "github"
+      },
+      "original": {
+        "owner": "blackhat-7",
+        "repo": "vellum.nvim",
         "type": "github"
       }
     }

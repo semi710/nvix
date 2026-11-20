@@ -167,6 +167,12 @@ in
               desc = "Preview markdown image under cursor",
             })
 
+            -- <leader>pp  Vellum (terminal, kitty graphics) preview
+            if vim.fn.exists(':Vellum') == 2 then
+              vim.keymap.set('n', '<leader>pp', '<cmd>Vellum<CR>',
+                { buffer = buf, desc = "Vellum markdown preview", silent = true })
+            end
+
             -- <leader>pg  Glow (terminal) preview
             vim.keymap.set('n', '<leader>pg', '<cmd>Glow<CR>',
               { buffer = buf, desc = "Markdown Glow preview", silent = true })
