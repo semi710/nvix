@@ -9,7 +9,30 @@ in
     lsp.servers.texlab.enable = true;
     vimtex = {
       enable = true;
-      texlivePackage = pkgs.texliveFull;
+      # texliveFull costs ~5 GB; this set covers the CV (article-class
+      # resume with charter/fontawesome5) and common article needs.
+      # Extend per-project for heavier documents.
+      texlivePackage = pkgs.texliveBasic.withPackages (
+        ps: with ps; [
+          latexmk
+          babel
+          babel-english
+          hyperref
+          geometry
+          graphics # color.sty
+          xcolor
+          psnfss # charter.sty
+          charter
+          enumitem
+          fancyhdr
+          fontawesome5
+          marvosym
+          ragged2e
+          titlesec
+          xurl
+          tools # tabularx, multicol
+        ]
+      );
     };
   };
 

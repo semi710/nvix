@@ -51,9 +51,10 @@ in
   extraPackages = with pkgs; [
     imagemagick
     ghostscript_headless
-    mermaid-cli
     dwt1-shell-color-scripts
-  ]; # for image support
+  ]; # for image support; snacks resolves mmdc from $PATH, so mermaid-cli
+  # (1.9 GB puppeteer/chromium closure) stays out and renders only where a
+  # devshell provides it
 
   autoCmd = [
     {

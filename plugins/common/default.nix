@@ -13,6 +13,9 @@ in
   # allowUnfree is handled at the flake pkgs level, not in nixvim module
   # nixpkgs.config.allowUnfree = true;
   luaLoader.enable = false;
+  # no plugin here uses the ruby provider; skipping it keeps the ruby
+  # interpreter + gem closure (~0.8 GB) out of every variant
+  withRuby = false;
   extraConfigLua = # lua
     ''
       vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true })
